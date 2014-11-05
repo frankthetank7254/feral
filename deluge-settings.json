@@ -1,0 +1,25 @@
+{
+  "alarm_ledcolour": -1,
+  "system_checkupdates": true,
+  "system_usedarktheme": false,
+  "alarm_adwnotifications": false,
+  "alarm_vibrate": false,
+  "servers": [
+    {
+      "folder": "\/username\/deluge",
+      "port": "443",
+      "host": "server.feralhosting.com",
+      "use_auth": true,
+      "name": "deluge main",
+      "ssl": true,
+      "download_alarm": false,
+      "type": "daemon_deluge",
+      "extra_password": "password",
+      "new_torrent_alarm": false,
+      "ssl_accept_all": false
+    },
+  ],
+  "alarm_enabled": true,
+  "rssfeeds": [],
+  "websites": []
+}
