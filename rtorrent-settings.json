@@ -6,7 +6,7 @@
   "alarm_vibrate": false,
   "servers": [
     {
-      "folder": "\/username\/rtorrent\/rpc",
+      "folder": "\/USERNAME-CHANGEME\/rtorrent\/rpc",
       "port": "443",
       "username": "rutorrent",
       "host": "server.feralhosting.com",
@@ -15,7 +15,7 @@
       "ssl": true,
       "download_alarm": false,
       "type": "daemon_rtorrent",
-      "password": "testme",
+      "password": "PASSWORD-CHANGEME",
       "new_torrent_alarm": false,
       "ssl_accept_all": false
     },

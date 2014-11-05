@@ -6,7 +6,7 @@
   "alarm_vibrate": false,
   "servers": [
     {
-      "folder": "\/username\/deluge",
+      "folder": "\/USERNAME-CHANGEME\/deluge",
       "port": "443",
       "host": "server.feralhosting.com",
       "use_auth": true,
@@ -14,7 +14,7 @@
       "ssl": true,
       "download_alarm": false,
       "type": "daemon_deluge",
-      "extra_password": "password",
+      "extra_password": "PASSWORD-CHANGEME",
       "new_torrent_alarm": false,
       "ssl_accept_all": false
     },

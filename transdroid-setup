@@ -104,12 +104,11 @@ then
                             wget -qO ~/$tmpdir/rtorrent-settings.json https://raw.githubusercontent.com/frankthetank7254/feral/master/rtorrent-settings.json
                             
                             echo  "Please enter the ruTorrent password from your Account overview page:"
-                            read rtpass
+                            read pass
                             
                             sed -i "s/USERNAME-CHANGEME/$(whoami)/" ~/$tmpdir/rtorrent-settings.json
                             sed -i "s/server./$(hostname)/" ~/$tmpdir/rtorrent-settings.json
-                            sed -i "s/RTORRENTPASSWORD-CHANGEME/$rtpass/" ~/$tmpdir/rtorrent-settings.json
-                            sed -i "s/SERVERNAME-CHANGEME/$(hostname)-rutorrent/" ~/$tmpdir/rtorrent-settings.json
+                            sed -i "s/PASSWORD-CHANGEME/$PASS/" ~/$tmpdir/rtorrent-settings.json
                             cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
                             
                             URL="http://$(whoami).$(hostname -f)/$tmpdir/rtorrent-settings.json"
@@ -132,12 +131,11 @@ then
                             wget -qO ~/$tmpdir/deluge-settings.json https://raw.githubusercontent.com/frankthetank7254/feral/master/deluge-settings.json
                             
                             echo  "Please enter the ruTorrent password from your Account overview page:"
-                            read rtpass
+                            read pass
                             
-                            sed -i "s/USERNAME-CHANGEME/$(whoami)/" ~/$tmpdir/deluge-settings.json
-                            sed -i "s/HOSTNAME-CHANGEME/$(hostname -f)/" ~/$tmpdir/deluge-settings.json
-                            sed -i "s/RTORRENTPASSWORD-CHANGEME/$rtpass/" ~/$tmpdir/deluge-settings.json
-                            sed -i "s/SERVERNAME-CHANGEME/$(hostname)-rutorrent/" ~/$tmpdir/deluge-settings.json
+                            sed -i "s/USERNAME-CHANGEME/$(whoami)/g" ~/$tmpdir/deluge-settings.json
+                            sed -i "s/server./$(hostname)/" ~/$tmpdir/deluge-settings.json
+                            sed -i "s/PASSWORD-CHANGEME/$PASS/" ~/$tmpdir/deluge-settings.json
                             cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
                             
                             URL="http://$(whoami).$(hostname -f)/$tmpdir/deluge-settings.json"
@@ -160,12 +158,11 @@ then
                             wget -qO ~/$tmpdir/transmission-settings.json https://raw.githubusercontent.com/frankthetank7254/feral/master/transmission-settings.json
                             
                             echo  "Please enter the ruTorrent password from your Account overview page:"
-                            read rtpass
+                            read pass
                             
                             sed -i "s/USERNAME-CHANGEME/$(whoami)/" ~/$tmpdir/transmission-settings.json
-                            sed -i "s/HOSTNAME-CHANGEME/$(hostname -f)/" ~/$tmpdir/transmission-settings.json
-                            sed -i "s/RTORRENTPASSWORD-CHANGEME/$rtpass/" ~/$tmpdir/transmission-settings.json
-                            sed -i "s/SERVERNAME-CHANGEME/$(hostname)-rutorrent/" ~/$tmpdir/transmission-settings.json
+                            sed -i "s/server./$(hostname -f)/" ~/$tmpdir/transmission-settings.json
+                            sed -i "s/PASSWORD-CHANGEME/$PASS/" ~/$tmpdir/transmission-settings.json
                             cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
                             
                             URL="http://$(whoami).$(hostname -f)/$tmpdir/transmission-settings.json"

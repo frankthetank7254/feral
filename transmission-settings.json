@@ -15,7 +15,7 @@
       "ssl": true,
       "download_alarm": false,
       "type": "daemon_transmission",
-      "password": "password",
+      "password": "PASSWORD-CHANGEME",
       "new_torrent_alarm": false,
       "ssl_accept_all": false
     }
