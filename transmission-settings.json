@@ -9,7 +9,7 @@
       "folder": "\/USERNAME-CHANGEME\/transmission\/",
       "port": "443",
       "username": "USERNAME-CHANGEME",
-      "host": "server.feralhosting.com",
+      "host": "HOSTNAME_CHANGEME.feralhosting.com",
       "use_auth": true,
       "name": "transmission main",
       "ssl": true,

@@ -9,7 +9,7 @@
       "folder": "\/USERNAME-CHANGEME\/rtorrent\/rpc",
       "port": "443",
       "username": "rutorrent",
-      "host": "server.feralhosting.com",
+      "host": "HOSTNAME_CHANGEME.feralhosting.com",
       "use_auth": true,
       "name": "rutorrent main",
       "ssl": true,

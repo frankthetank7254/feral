@@ -107,7 +107,7 @@ then
                             read pass
                             
                             sed -i "s/USERNAME-CHANGEME/$(whoami)/" ~/$tmpdir/rtorrent-settings.json
-                            sed -i "s/server./$(hostname)./" ~/$tmpdir/rtorrent-settings.json
+                            sed -i "s/HOSTNAME_CHANGEME/$(hostname)/" ~/$tmpdir/rtorrent-settings.json
                             sed -i "s/PASSWORD-CHANGEME/$pass/" ~/$tmpdir/rtorrent-settings.json
                             cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
                             
@@ -134,7 +134,7 @@ then
                             read pass
                             
                             sed -i "s/USERNAME-CHANGEME/$(whoami)/g" ~/$tmpdir/deluge-settings.json
-                            sed -i "s/server./$(hostname)./" ~/$tmpdir/deluge-settings.json
+                            sed -i "s/HOSTNAME_CHANGEME/$(hostname)/" ~/$tmpdir/deluge-settings.json
                             sed -i "s/PASSWORD-CHANGEME/$pass/" ~/$tmpdir/deluge-settings.json
                             cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
                             
@@ -161,7 +161,7 @@ then
                             read pass
                             
                             sed -i "s/USERNAME-CHANGEME/$(whoami)/" ~/$tmpdir/transmission-settings.json
-                            sed -i "s/server./$(hostname)./" ~/$tmpdir/transmission-settings.json
+                            sed -i "s/HOSTNAME_CHANGEME/$(hostname)/" ~/$tmpdir/transmission-settings.json
                             sed -i "s/PASSWORD-CHANGEME/$pass/" ~/$tmpdir/transmission-settings.json
                             cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
                             
