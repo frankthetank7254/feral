@@ -82,14 +82,14 @@ then
 #### User Script Starts ####
 ############################
 #
-	echo This script will generate the "settings.json" file that Transdroid requires for importing settings. Please choose the client you are using.
+    echo This script will generate the "settings.json" file that Transdroid requires for importing settings. Please choose the client you are using.
     showMenu () 
     {
             echo "1) $option1"
             echo "2) $option2"
             echo "3) $option3"
             echo "4) $option4"
-			echo
+            echo
     }
 
     while [ 1 ]
@@ -99,90 +99,90 @@ then
             echo
             case "$CHOICE" in
                     "1")
-							tmpdir=tmp$(shuf -i 10000-90000 -n 1)
-							mkdir $tmpdir
-							wget -qO ~/$tmpdir/rtorrent-settings.json https://raw.githubusercontent.com/frankthetank7254/feral/master/rtorrent-settings.json
-							
-							echo  "Please enter the ruTorrent password from your Account overview page:"
-							read rtpass
-							
-							sed "s/USERNAME-CHANGEME/$(whoami)/" ~/$tmpdir/rtorrent-settings.json > ~/$tmpdir/rtorrent-settings.json.1
-							sed "s/server./$(hostname)/" ~/$tmpdir/rtorrent-settings.json.1 > ~/$tmpdir/rtorrent-settings.json.2
-							sed "s/RTORRENTPASSWORD-CHANGEME/$rtpass/" ~/$tmpdir/rtorrent-settings.json.2 > ~/$tmpdir/rtorrent-settings.json.3
-							sed "s/SERVERNAME-CHANGEME/$(hostname)-rutorrent/" ~/$tmpdir/rtorrent-settings.json.3 > ~/$tmpdir/rtorrent-settings.json
-							cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
-							
-							URL="http://$(whoami).$(hostname -f)/$tmpdir/rtorrent-settings.json"
-							echo Download the generated config file to your phone using the following link, then, in Transdroid, go to Settings>>System>>Import Settings, and select the downloaded file.
-							echo Use your phone to navigate here: $URL
-							echo or use the qrcode below:
-							echo
-							#qrencode -t ASCII -o ~/$tmpdir/ascii-code.txt $URL
-							#sed 's/ /M/g' ~/$tmpdir/ascii-code.txt > ~/$tmpdir/ascii-code2.txt
-							#sed 's/#/ /g' ~/$tmpdir/ascii-code2.txt
-							
-							echo After you have downloaded the config file, press ENTER to clean up.
-							read useless
-							rm -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/$tmpdir/
+                            tmpdir=tmp$(shuf -i 10000-90000 -n 1)
+                            mkdir $tmpdir
+                            wget -qO ~/$tmpdir/rtorrent-settings.json https://raw.githubusercontent.com/frankthetank7254/feral/master/rtorrent-settings.json
+                            
+                            echo  "Please enter the ruTorrent password from your Account overview page:"
+                            read rtpass
+                            
+                            sed "s/USERNAME-CHANGEME/$(whoami)/" ~/$tmpdir/rtorrent-settings.json > ~/$tmpdir/rtorrent-settings.json.1
+                            sed "s/server./$(hostname)/" ~/$tmpdir/rtorrent-settings.json.1 > ~/$tmpdir/rtorrent-settings.json.2
+                            sed "s/RTORRENTPASSWORD-CHANGEME/$rtpass/" ~/$tmpdir/rtorrent-settings.json.2 > ~/$tmpdir/rtorrent-settings.json.3
+                            sed "s/SERVERNAME-CHANGEME/$(hostname)-rutorrent/" ~/$tmpdir/rtorrent-settings.json.3 > ~/$tmpdir/rtorrent-settings.json
+                            cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
+                            
+                            URL="http://$(whoami).$(hostname -f)/$tmpdir/rtorrent-settings.json"
+                            echo Download the generated config file to your phone using the following link, then, in Transdroid, go to Settings>>System>>Import Settings, and select the downloaded file.
+                            echo Use your phone to navigate here: $URL
+                            echo or use the qrcode below:
+                            echo
+                            #qrencode -t ASCII -o ~/$tmpdir/ascii-code.txt $URL
+                            #sed 's/ /M/g' ~/$tmpdir/ascii-code.txt > ~/$tmpdir/ascii-code2.txt
+                            #sed 's/#/ /g' ~/$tmpdir/ascii-code2.txt
+                            
+                            echo After you have downloaded the config file, press ENTER to clean up.
+                            read useless
+                            rm -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/$tmpdir/
                             echo
                             ;;
                     "2")
-							tmpdir=tmp$(shuf -i 10000-90000 -n 1)
-							mkdir $tmpdir
-							wget -qO ~/$tmpdir/deluge-settings.json https://raw.githubusercontent.com/frankthetank7254/feral/master/deluge-settings.json
-							
-							echo  "Please enter the ruTorrent password from your Account overview page:"
-							read rtpass
-							
-							sed "s/USERNAME-CHANGEME/$(whoami)/" ~/$tmpdir/deluge-settings.json > ~/$tmpdir/deluge-settings.json.1
-							sed "s/HOSTNAME-CHANGEME/$(hostname -f)/" ~/$tmpdir/deluge-settings.json.1 > ~/$tmpdir/deluge-settings.json.2
-							sed "s/RTORRENTPASSWORD-CHANGEME/$rtpass/" ~/$tmpdir/deluge-settings.json.2 > ~/$tmpdir/deluge-settings.json.3
-							sed "s/SERVERNAME-CHANGEME/$(hostname)-rutorrent/" ~/$tmpdir/deluge-settings.json.3 > ~/$tmpdir/deluge-settings.json
-							cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
-							
-							URL="http://$(whoami).$(hostname -f)/$tmpdir/deluge-settings.json"
-							echo Download the generated config file to your phone using the following link, then, in Transdroid, go to Settings>>System>>Import Settings, and select the downloaded file.
-							echo Use your phone to navigate here: $URL
-							echo or use the qrcode below:
-							echo
-							#qrencode -t ASCII -o ~/$tmpdir/ascii-code.txt $URL
-							#sed 's/ /M/g' ~/$tmpdir/ascii-code.txt > ~/$tmpdir/ascii-code2.txt
-							#sed 's/#/ /g' ~/$tmpdir/ascii-code2.txt
-							
-							echo After you have downloaded the config file, press ENTER to clean up.
-							read useless
-							rm -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/$tmpdir/
+                            tmpdir=tmp$(shuf -i 10000-90000 -n 1)
+                            mkdir $tmpdir
+                            wget -qO ~/$tmpdir/deluge-settings.json https://raw.githubusercontent.com/frankthetank7254/feral/master/deluge-settings.json
+                            
+                            echo  "Please enter the ruTorrent password from your Account overview page:"
+                            read rtpass
+                            
+                            sed "s/USERNAME-CHANGEME/$(whoami)/" ~/$tmpdir/deluge-settings.json > ~/$tmpdir/deluge-settings.json.1
+                            sed "s/HOSTNAME-CHANGEME/$(hostname -f)/" ~/$tmpdir/deluge-settings.json.1 > ~/$tmpdir/deluge-settings.json.2
+                            sed "s/RTORRENTPASSWORD-CHANGEME/$rtpass/" ~/$tmpdir/deluge-settings.json.2 > ~/$tmpdir/deluge-settings.json.3
+                            sed "s/SERVERNAME-CHANGEME/$(hostname)-rutorrent/" ~/$tmpdir/deluge-settings.json.3 > ~/$tmpdir/deluge-settings.json
+                            cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
+                            
+                            URL="http://$(whoami).$(hostname -f)/$tmpdir/deluge-settings.json"
+                            echo Download the generated config file to your phone using the following link, then, in Transdroid, go to Settings>>System>>Import Settings, and select the downloaded file.
+                            echo Use your phone to navigate here: $URL
+                            echo or use the qrcode below:
+                            echo
+                            #qrencode -t ASCII -o ~/$tmpdir/ascii-code.txt $URL
+                            #sed 's/ /M/g' ~/$tmpdir/ascii-code.txt > ~/$tmpdir/ascii-code2.txt
+                            #sed 's/#/ /g' ~/$tmpdir/ascii-code2.txt
+                            
+                            echo After you have downloaded the config file, press ENTER to clean up.
+                            read useless
+                            rm -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/$tmpdir/
                             echo
                             ;;
                     "3")
-							tmpdir=tmp$(shuf -i 10000-90000 -n 1)
-							mkdir $tmpdir
-							wget -qO ~/$tmpdir/transmission-settings.json https://raw.githubusercontent.com/frankthetank7254/feral/master/transmission-settings.json
-							
-							echo  "Please enter the ruTorrent password from your Account overview page:"
-							read rtpass
-							
-							sed "s/USERNAME-CHANGEME/$(whoami)/" ~/$tmpdir/transmission-settings.json > ~/$tmpdir/transmission-settings.json.1
-							sed "s/HOSTNAME-CHANGEME/$(hostname -f)/" ~/$tmpdir/transmission-settings.json.1 > ~/$tmpdir/transmission-settings.json.2
-							sed "s/RTORRENTPASSWORD-CHANGEME/$rtpass/" ~/$tmpdir/transmission-settings.json.2 > ~/$tmpdir/transmission-settings.json.3
-							sed "s/SERVERNAME-CHANGEME/$(hostname)-rutorrent/" ~/$tmpdir/transmission-settings.json.3 > ~/$tmpdir/transmission-settings.json
-							cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
-							
-							URL="http://$(whoami).$(hostname -f)/$tmpdir/transmission-settings.json"
-							echo Download the generated config file to your phone using the following link, then, in Transdroid, go to Settings>>System>>Import Settings, and select the downloaded file.
-							echo Use your phone to navigate here: $URL
-							echo or use the qrcode below:
-							echo
-							#qrencode -t ASCII -o ~/$tmpdir/ascii-code.txt $URL
-							#sed 's/ /M/g' ~/$tmpdir/ascii-code.txt > ~/$tmpdir/ascii-code2.txt
-							#sed 's/#/ /g' ~/$tmpdir/ascii-code2.txt
-							
-							echo After you have downloaded the config file, press ENTER to clean up.
-							read useless
-							rm -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/$tmpdir/
+                            tmpdir=tmp$(shuf -i 10000-90000 -n 1)
+                            mkdir $tmpdir
+                            wget -qO ~/$tmpdir/transmission-settings.json https://raw.githubusercontent.com/frankthetank7254/feral/master/transmission-settings.json
+                            
+                            echo  "Please enter the ruTorrent password from your Account overview page:"
+                            read rtpass
+                            
+                            sed "s/USERNAME-CHANGEME/$(whoami)/" ~/$tmpdir/transmission-settings.json > ~/$tmpdir/transmission-settings.json.1
+                            sed "s/HOSTNAME-CHANGEME/$(hostname -f)/" ~/$tmpdir/transmission-settings.json.1 > ~/$tmpdir/transmission-settings.json.2
+                            sed "s/RTORRENTPASSWORD-CHANGEME/$rtpass/" ~/$tmpdir/transmission-settings.json.2 > ~/$tmpdir/transmission-settings.json.3
+                            sed "s/SERVERNAME-CHANGEME/$(hostname)-rutorrent/" ~/$tmpdir/transmission-settings.json.3 > ~/$tmpdir/transmission-settings.json
+                            cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
+                            
+                            URL="http://$(whoami).$(hostname -f)/$tmpdir/transmission-settings.json"
+                            echo Download the generated config file to your phone using the following link, then, in Transdroid, go to Settings>>System>>Import Settings, and select the downloaded file.
+                            echo Use your phone to navigate here: $URL
+                            echo or use the qrcode below:
+                            echo
+                            #qrencode -t ASCII -o ~/$tmpdir/ascii-code.txt $URL
+                            #sed 's/ /M/g' ~/$tmpdir/ascii-code.txt > ~/$tmpdir/ascii-code2.txt
+                            #sed 's/#/ /g' ~/$tmpdir/ascii-code2.txt
+                            
+                            echo After you have downloaded the config file, press ENTER to clean up.
+                            read useless
+                            rm -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/$tmpdir/
                             echo
                             ;;
-					"4")
+                    "4")
                             echo "You chose to quit the script."
                             echo
                             exit
