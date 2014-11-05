@@ -113,7 +113,7 @@ then
                             cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
                             
                             URL="http://$(whoami).$(hostname -f)/$tmpdir/"
-                            echo Download the generated config file to your phone using the following link and place it in /mnt/sdcard/Transdroid/, then, in Transdroid, go to Settings>>System>>Import Settings
+                            echo "Download the generated config file to your phone using the following link and place it in /mnt/sdcard/Transdroid/, then, in Transdroid, go to Settings>>System>>Import Settings"
                             echo Use your phone to navigate here: $URL
                             echo or use the qrcode below:
                             echo
@@ -141,7 +141,7 @@ then
                             cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
                             
                             URL="http://$(whoami).$(hostname -f)/$tmpdir/"
-                            echo Download the generated config file to your phone using the following link and place it in /mnt/sdcard/Transdroid/, then, in Transdroid, go to Settings>>System>>Import Settings
+                            echo "Download the generated config file to your phone using the following link and place it in /mnt/sdcard/Transdroid/, then, in Transdroid, go to Settings>>System>>Import Settings"
                             echo Use your phone to navigate here: $URL
                             echo or use the qrcode below:
                             echo
@@ -169,7 +169,7 @@ then
                             cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
                             
                             URL="http://$(whoami).$(hostname -f)/$tmpdir/"
-                            echo Download the generated config file to your phone using the following link and place it in /mnt/sdcard/Transdroid/, then, in Transdroid, go to Settings>>System>>Import Settings.
+                            echo "Download the generated config file to your phone using the following link and place it in /mnt/sdcard/Transdroid/, then, in Transdroid, go to Settings>>System>>Import Settings."
                             echo Use your phone to navigate here: $URL
                             echo or use the qrcode below:
                             echo
