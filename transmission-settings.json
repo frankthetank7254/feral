@@ -6,9 +6,9 @@
   "alarm_vibrate": false,
   "servers": [
     {
-      "folder": "\/username\/transmission\/",
+      "folder": "\/USERNAME-CHANGEME\/transmission\/",
       "port": "443",
-      "username": "username",
+      "username": "USERNAME-CHANGEME",
       "host": "server.feralhosting.com",
       "use_auth": true,
       "name": "transmission main",

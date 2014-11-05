@@ -4,7 +4,7 @@ scriptversion="1.0.0"
 scriptname="transdroid.setup"
 # adamaze, konichiwa
 #
-# wget -qO ~/transdroid.setup http://XXXX
+# wget -qO ~/transdroid.setup https://raw.githubusercontent.com/frankthetank7254/feral/master/transdroid-setup && bash ~/transdroid.setup
 #
 ############################
 ## Version History Starts ##
@@ -31,7 +31,7 @@ option4="Quit"
 ###### Variable Start ######
 ############################
 #
-scripturl="https://raw.github.com/feralhosting/XXXX"
+scripturl="https://raw.githubusercontent.com/frankthetank7254/feral/master/transdroid-setup"
 #
 ############################
 ####### Variable End #######
@@ -101,7 +101,7 @@ then
                     "1")
 							tmpdir=tmp$(shuf -i 10000-90000 -n 1)
 							mkdir $tmpdir
-							wget -qO ~/$tmpdir/rtorrent-settings.json XXXXX
+							wget -qO ~/$tmpdir/rtorrent-settings.json https://raw.githubusercontent.com/frankthetank7254/feral/master/rtorrent-settings.json
 							
 							echo  "Please enter the ruTorrent password from your Account overview page:"
 							read rtpass
@@ -129,7 +129,7 @@ then
                     "2")
 							tmpdir=tmp$(shuf -i 10000-90000 -n 1)
 							mkdir $tmpdir
-							wget -qO ~/$tmpdir/deluge-settings.json XXXXX
+							wget -qO ~/$tmpdir/deluge-settings.json https://raw.githubusercontent.com/frankthetank7254/feral/master/deluge-settings.json
 							
 							echo  "Please enter the ruTorrent password from your Account overview page:"
 							read rtpass
@@ -157,7 +157,7 @@ then
                     "3")
 							tmpdir=tmp$(shuf -i 10000-90000 -n 1)
 							mkdir $tmpdir
-							wget -qO ~/$tmpdir/transmission-settings.json XXXXX
+							wget -qO ~/$tmpdir/transmission-settings.json https://raw.githubusercontent.com/frankthetank7254/feral/master/transmission-settings.json
 							
 							echo  "Please enter the ruTorrent password from your Account overview page:"
 							read rtpass
