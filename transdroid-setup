@@ -107,7 +107,7 @@ then
 							read rtpass
 							
 							sed "s/USERNAME-CHANGEME/$(whoami)/" ~/$tmpdir/rtorrent-settings.json > ~/$tmpdir/rtorrent-settings.json.1
-							sed "s/HOSTNAME-CHANGEME/$(hostname -f)/" ~/$tmpdir/rtorrent-settings.json.1 > ~/$tmpdir/rtorrent-settings.json.2
+							sed "s/server./$(hostname)/" ~/$tmpdir/rtorrent-settings.json.1 > ~/$tmpdir/rtorrent-settings.json.2
 							sed "s/RTORRENTPASSWORD-CHANGEME/$rtpass/" ~/$tmpdir/rtorrent-settings.json.2 > ~/$tmpdir/rtorrent-settings.json.3
 							sed "s/SERVERNAME-CHANGEME/$(hostname)-rutorrent/" ~/$tmpdir/rtorrent-settings.json.3 > ~/$tmpdir/rtorrent-settings.json
 							cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
