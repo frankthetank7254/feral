@@ -1,0 +1,27 @@
+{
+  "alarm_ledcolour": -8537311,
+  "system_checkupdates": true,
+  "system_usedarktheme": false,
+  "alarm_adwnotifications": false,
+  "alarm_vibrate": false,
+  "servers": [
+    {
+      "folder": "\/USERNAME-CHANGEME\/rtorrent\/rpc",
+      "port": "443",
+      "username": "rutorrent",
+      "host": "HOSTNAME-CHANGEME",
+      "use_auth": true,
+      "name": "SERVERNAME-CHANGEME",
+      "ssl": true,
+      "download_alarm": false,
+      "type": "daemon_rtorrent",
+      "password": "RTORRENTPASSWORD-CHANGEME",
+      "new_torrent_alarm": false,
+      "ssl_accept_all": false
+    }
+  ],
+  "alarm_enabled": true,
+  "alarm_interval": "60",
+  "rssfeeds": [],
+  "websites": []
+}
