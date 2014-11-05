@@ -109,10 +109,11 @@ then
                             sed -i "s/USERNAME-CHANGEME/$(whoami)/" ~/$tmpdir/rtorrent-settings.json
                             sed -i "s/HOSTNAME_CHANGEME/$(hostname)/" ~/$tmpdir/rtorrent-settings.json
                             sed -i "s/PASSWORD-CHANGEME/$pass/" ~/$tmpdir/rtorrent-settings.json
+                            mv ~/$tmpdir/rtorrent-settings.json ~/$tmpdir/settings.json
                             cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
                             
-                            URL="http://$(whoami).$(hostname -f)/$tmpdir/rtorrent-settings.json"
-                            echo Download the generated config file to your phone using the following link, then, in Transdroid, go to Settings>>System>>Import Settings, and select the downloaded file.
+                            URL="http://$(whoami).$(hostname -f)/$tmpdir/"
+                            echo Download the generated config file to your phone using the following link and place it in /mnt/sdcard/Transdroid/, then, in Transdroid, go to Settings>>System>>Import Settings
                             echo Use your phone to navigate here: $URL
                             echo or use the qrcode below:
                             echo
@@ -136,10 +137,11 @@ then
                             sed -i "s/USERNAME-CHANGEME/$(whoami)/g" ~/$tmpdir/deluge-settings.json
                             sed -i "s/HOSTNAME_CHANGEME/$(hostname)/" ~/$tmpdir/deluge-settings.json
                             sed -i "s/PASSWORD-CHANGEME/$pass/" ~/$tmpdir/deluge-settings.json
+                            mv ~/$tmpdir/deluge-settings.json ~/$tmpdir/settings.json
                             cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
                             
-                            URL="http://$(whoami).$(hostname -f)/$tmpdir/deluge-settings.json"
-                            echo Download the generated config file to your phone using the following link, then, in Transdroid, go to Settings>>System>>Import Settings, and select the downloaded file.
+                            URL="http://$(whoami).$(hostname -f)/$tmpdir/"
+                            echo Download the generated config file to your phone using the following link and place it in /mnt/sdcard/Transdroid/, then, in Transdroid, go to Settings>>System>>Import Settings
                             echo Use your phone to navigate here: $URL
                             echo or use the qrcode below:
                             echo
@@ -163,10 +165,11 @@ then
                             sed -i "s/USERNAME-CHANGEME/$(whoami)/" ~/$tmpdir/transmission-settings.json
                             sed -i "s/HOSTNAME_CHANGEME/$(hostname)/" ~/$tmpdir/transmission-settings.json
                             sed -i "s/PASSWORD-CHANGEME/$pass/" ~/$tmpdir/transmission-settings.json
+                            mv ~/$tmpdir/deluge-settings.json ~/$tmpdir/settings.json
                             cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
                             
-                            URL="http://$(whoami).$(hostname -f)/$tmpdir/transmission-settings.json"
-                            echo Download the generated config file to your phone using the following link, then, in Transdroid, go to Settings>>System>>Import Settings, and select the downloaded file.
+                            URL="http://$(whoami).$(hostname -f)/$tmpdir/"
+                            echo Download the generated config file to your phone using the following link and place it in /mnt/sdcard/Transdroid/, then, in Transdroid, go to Settings>>System>>Import Settings.
                             echo Use your phone to navigate here: $URL
                             echo or use the qrcode below:
                             echo
