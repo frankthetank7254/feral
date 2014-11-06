@@ -143,7 +143,7 @@ then
                             #
                             echo -e 'AuthType Basic\nAuthName "'"$tmpdir2"'"\nAuthUserFile "'"$HOME"'/www/'$(whoami)'.'$(hostname -f)'/public_html/'"$tmpdir2"'/.htpasswd"\nRequire "'$(whoami)'"' > ~/www/$(whoami).$(hostname -f)/public_html/"$tmpdir2"/.htaccess
                             #
-                            LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 1 -t ANSI -o - "$URL"
+                            LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 1 -t ANSI256 -o - "$URL"
                             #
                             echo
                             echo -e "\033[33m""Use the QRCode for quick access to the generated settings.json""\e[0m"
@@ -203,7 +203,7 @@ then
                             #
                             echo -e 'AuthType Basic\nAuthName "'"$tmpdir2"'"\nAuthUserFile "'"$HOME"'/www/'$(whoami)'.'$(hostname -f)'/public_html/'"$tmpdir2"'/.htpasswd"\nRequire "'$(whoami)'"' > ~/www/$(whoami).$(hostname -f)/public_html/"$tmpdir2"/.htaccess
                             #
-                            LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 1 -t ANSI -o - "$URL"
+                            LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 1 -t ANSI256 -o - "$URL"
                             #
                             echo
                             echo -e "\033[33m""Use the QRCode for quick access to the generated settings.json""\e[0m"
@@ -263,7 +263,7 @@ then
                             #
                             echo -e 'AuthType Basic\nAuthName "'"$tmpdir2"'"\nAuthUserFile "'"$HOME"'/www/'$(whoami)'.'$(hostname -f)'/public_html/'"$tmpdir2"'/.htpasswd"\nRequire "'$(whoami)'"' > ~/www/$(whoami).$(hostname -f)/public_html/"$tmpdir2"/.htaccess
                             #
-                            LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 1 -t ANSI -o - "$URL"
+                            LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 1 -t ANSI256 -o - "$URL"
                             #
                             echo
                             echo -e "\033[33m""Use the QRCode for quick access to the generated settings.json""\e[0m"
