@@ -287,33 +287,6 @@ then
                                 echo "Nothing was removed. Please check manually."
                             fi
                             ;;
-                            
-                            
-                            mkdir $tmpdir
-                            wget -qO ~/$tmpdir/transmission-settings.json "$transmissionjson"
-                            
-                            echo  "Please enter the Transmission password from your Account overview page:"
-                            read -ep pass
-                            
-                            sed -i "s/USERNAME-CHANGEME/$(whoami)/" ~/$tmpdir/transmission-settings.json
-                            sed -i "s/HOSTNAME_CHANGEME/$(hostname)/" ~/$tmpdir/transmission-settings.json
-                            sed -i "s/PASSWORD-CHANGEME/$pass/" ~/$tmpdir/transmission-settings.json
-                            mv ~/$tmpdir/deluge-settings.json ~/$tmpdir/settings.json
-                            cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
-                            
-                            echo "Download the generated config file to your phone using the following link and place it in /mnt/sdcard/Transdroid/, then, in Transdroid, go to Settings>>System>>Import Settings."
-                            echo Use your phone to navigate here: $URL
-                            echo or use the qrcode below:
-                            echo
-                            qrencode -t ASCII -o ~/$tmpdir/ascii-code.txt $URL
-                            sed -i 's/ /M/g' ~/$tmpdir/ascii-code.txt
-                            sed 's/#/ /g' ~/$tmpdir/ascii-code.txt
-                            
-                            echo After you have downloaded the config file, press ENTER to clean up.
-                            read useless
-                            rm -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/$tmpdir/
-                            echo
-                            ;;
                     "4")
                             echo "You chose to quit the script."
                             echo
