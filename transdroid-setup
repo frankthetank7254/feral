@@ -1,6 +1,6 @@
 #!/bin/bash
 # Transdroid Setup
-scriptversion="1.0.1"
+scriptversion="1.0.2"
 scriptname="transdroid.setup"
 # adamaze, konichiwa
 #
