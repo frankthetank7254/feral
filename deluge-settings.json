@@ -8,7 +8,7 @@
     {
       "folder": "\/USERNAME-CHANGEME\/deluge",
       "port": "443",
-      "host": "HOSTNAME_CHANGEME.feralhosting.com",
+      "host": "HOSTNAME_CHANGEME",
       "use_auth": true,
       "name": "deluge main",
       "ssl": true,
