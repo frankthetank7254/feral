@@ -172,36 +172,127 @@ then
                             fi
                             ;;
                     "2")
-                            mkdir $tmpdir
-                            wget -qO ~/$tmpdir/deluge-settings.json "$delugejson"
-                            
-                            echo  "Please enter the ruTorrent password from your Account overview page:"
-                            read -ep pass
-                            
-                            sed -i "s/USERNAME-CHANGEME/$(whoami)/g" ~/$tmpdir/deluge-settings.json
-                            sed -i "s/HOSTNAME_CHANGEME/$(hostname)/" ~/$tmpdir/deluge-settings.json
-                            sed -i "s/PASSWORD-CHANGEME/$pass/" ~/$tmpdir/deluge-settings.json
-                            mv ~/$tmpdir/deluge-settings.json ~/$tmpdir/settings.json
-                            cp -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/
-                            
-                            echo "Download the generated config file to your phone using the following link and place it in /mnt/sdcard/Transdroid/, then, in Transdroid, go to Settings>>System>>Import Settings"
-                            echo Use your phone to navigate here: $URL
-                            echo or use the qrcode below:
+                            mkdir -p ~/$tmpdir1
+                            #
+                            wget -qO ~/$tmpdir1/qrencode_3.3.0-2_amd64.deb http://ftp.uk.debian.org/debian/pool/main/q/qrencode/qrencode_3.3.0-2_amd64.deb
+                            wget -qO ~/$tmpdir1/libqrencode3_3.3.0-2_amd64.deb http://ftp.uk.debian.org/debian/pool/main/q/qrencode/libqrencode3_3.3.0-2_amd64.deb
+                            #
+                            dpkg-deb -x ~/$tmpdir1/qrencode_3.3.0-2_amd64.deb ~/$tmpdir1
+                            dpkg-deb -x ~/$tmpdir1/libqrencode3_3.3.0-2_amd64.deb ~/$tmpdir1
+                            #
+                            wget -qO ~/$tmpdir1/settings.json "$delugejson"
+                            read -ep "Please enter the Deluge password from your Account overview page: " pass
                             echo
-                            qrencode -t ASCII -o ~/$tmpdir/ascii-code.txt $URL
-                            sed -i 's/ /M/g' ~/$tmpdir/ascii-code.txt
-                            sed 's/#/ /g' ~/$tmpdir/ascii-code.txt
-                            
-                            echo After you have downloaded the config file, press ENTER to clean up.
-                            read useless
-                            rm -r ~/$tmpdir ~/www/$(whoami).$(hostname)/public_html/$tmpdir/
+                            #
+                            sed -i 's/USERNAME-CHANGEME/'$(whoami)'/g' ~/$tmpdir1/settings.json
+                            sed -i 's/HOSTNAME_CHANGEME/'$(hostname -f)'/' ~/$tmpdir1/settings.json
+                            sed -i 's/PASSWORD-CHANGEME/'$pass'/' ~/$tmpdir1/settings.json
+                            #
+                            mkdir -p ~/www/$(whoami).$(hostname)/public_html/$tmpdir2
+                            #
+                            cp -f ~/$tmpdir1/settings.json ~/www/$(whoami).$(hostname)/public_html/$tmpdir2/settings.json
+                            htpasswd -cbm ~/www/$(whoami).$(hostname -f)/public_html/$tmpdir2/.htpasswd "$(whoami)" "$randompass" > /dev/null 2>&1
+                            #
+                            if [[ -d ~/.nginx/conf.d/000-default-server.d ]]
+                            then
+                                echo -e 'location /'"$tmpdir2"' {\n    auth_basic "'"$tmpdir2"'";\n    auth_basic_user_file "'"$HOME"'/www/'$(whoami)'.'$(hostname -f)'/public_html/'"$tmpdir2"'/.htpasswd";\n}' > ~/.nginx/conf.d/000-default-server.d/transdroid_import.conf
+                                /usr/sbin/nginx -s reload -c ~/.nginx/nginx.conf > /dev/null 2>&1
+                            fi
+                            #
+                            echo -e 'AuthType Basic\nAuthName "'"$tmpdir2"'"\nAuthUserFile "'"$HOME"'/www/'$(whoami)'.'$(hostname -f)'/public_html/'"$tmpdir2"'/.htpasswd"\nRequire "'$(whoami)'"' > ~/www/$(whoami).$(hostname -f)/public_html/"$tmpdir2"/.htaccess
+                            #
+                            LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 1 -t ANSI -o - "$URL"
+                            #
                             echo
+                            echo -e "\033[33m""Use the QRCode for quick access to the generated settings.json""\e[0m"
+                            echo
+                            echo "1: Download the generated config file to your phone using the following link"
+                            echo
+                            echo -e "\033[32m""$URL""\e[0m"
+                            echo
+                            echo -e "2: Open Transdroid/Transdrone and Go to:" "\033[36m""Settings > System > Import settings""\e[0m"
+                            echo
+                            echo "3: You will be told which directory the file is required to be in for import. Copy it there then import it."
+                            echo
+                            read -ep "After you have downloaded the config file, press ENTER to clean up." useless
+                            echo
+                            #
+                            if [[ ! -z "$tmpdir1" && ! -z "$tmpdir2" ]]
+                            then
+                                cd && rm -rf $tmpdir1 ~/www/$(whoami).$(hostname)/public_html/$tmpdir2
+                                if [[ -d ~/.nginx/conf.d/000-default-server.d ]]
+                                then
+                                    rm -f ~/.nginx/conf.d/000-default-server.d/transdroid_import.conf
+                                    /usr/sbin/nginx -s reload -c ~/.nginx/nginx.conf > /dev/null 2>&1
+                                fi
+                            else
+                                echo "Nothing was removed. Please check manually."
+                            fi
                             ;;
                     "3")
+                            mkdir -p ~/$tmpdir1
+                            #
+                            wget -qO ~/$tmpdir1/qrencode_3.3.0-2_amd64.deb http://ftp.uk.debian.org/debian/pool/main/q/qrencode/qrencode_3.3.0-2_amd64.deb
+                            wget -qO ~/$tmpdir1/libqrencode3_3.3.0-2_amd64.deb http://ftp.uk.debian.org/debian/pool/main/q/qrencode/libqrencode3_3.3.0-2_amd64.deb
+                            #
+                            dpkg-deb -x ~/$tmpdir1/qrencode_3.3.0-2_amd64.deb ~/$tmpdir1
+                            dpkg-deb -x ~/$tmpdir1/libqrencode3_3.3.0-2_amd64.deb ~/$tmpdir1
+                            #
+                            wget -qO ~/$tmpdir1/settings.json "$transmissionjson"
+                            read -ep "Please enter the Transmission password from your Account overview page: " pass
+                            echo
+                            #
+                            sed -i 's/USERNAME-CHANGEME/'$(whoami)'/' ~/$tmpdir1/settings.json
+                            sed -i 's/HOSTNAME_CHANGEME/'$(hostname -f)'/' ~/$tmpdir1/settings.json
+                            sed -i 's/PASSWORD-CHANGEME/'$pass'/' ~/$tmpdir1/settings.json
+                            #
+                            mkdir -p ~/www/$(whoami).$(hostname)/public_html/$tmpdir2
+                            #
+                            cp -f ~/$tmpdir1/settings.json ~/www/$(whoami).$(hostname)/public_html/$tmpdir2/settings.json
+                            htpasswd -cbm ~/www/$(whoami).$(hostname -f)/public_html/$tmpdir2/.htpasswd "$(whoami)" "$randompass" > /dev/null 2>&1
+                            #
+                            if [[ -d ~/.nginx/conf.d/000-default-server.d ]]
+                            then
+                                echo -e 'location /'"$tmpdir2"' {\n    auth_basic "'"$tmpdir2"'";\n    auth_basic_user_file "'"$HOME"'/www/'$(whoami)'.'$(hostname -f)'/public_html/'"$tmpdir2"'/.htpasswd";\n}' > ~/.nginx/conf.d/000-default-server.d/transdroid_import.conf
+                                /usr/sbin/nginx -s reload -c ~/.nginx/nginx.conf > /dev/null 2>&1
+                            fi
+                            #
+                            echo -e 'AuthType Basic\nAuthName "'"$tmpdir2"'"\nAuthUserFile "'"$HOME"'/www/'$(whoami)'.'$(hostname -f)'/public_html/'"$tmpdir2"'/.htpasswd"\nRequire "'$(whoami)'"' > ~/www/$(whoami).$(hostname -f)/public_html/"$tmpdir2"/.htaccess
+                            #
+                            LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 1 -t ANSI -o - "$URL"
+                            #
+                            echo
+                            echo -e "\033[33m""Use the QRCode for quick access to the generated settings.json""\e[0m"
+                            echo
+                            echo "1: Download the generated config file to your phone using the following link"
+                            echo
+                            echo -e "\033[32m""$URL""\e[0m"
+                            echo
+                            echo -e "2: Open Transdroid/Transdrone and Go to:" "\033[36m""Settings > System > Import settings""\e[0m"
+                            echo
+                            echo "3: You will be told which directory the file is required to be in for import. Copy it there then import it."
+                            echo
+                            read -ep "After you have downloaded the config file, press ENTER to clean up." useless
+                            echo
+                            #
+                            if [[ ! -z "$tmpdir1" && ! -z "$tmpdir2" ]]
+                            then
+                                cd && rm -rf $tmpdir1 ~/www/$(whoami).$(hostname)/public_html/$tmpdir2
+                                if [[ -d ~/.nginx/conf.d/000-default-server.d ]]
+                                then
+                                    rm -f ~/.nginx/conf.d/000-default-server.d/transdroid_import.conf
+                                    /usr/sbin/nginx -s reload -c ~/.nginx/nginx.conf > /dev/null 2>&1
+                                fi
+                            else
+                                echo "Nothing was removed. Please check manually."
+                            fi
+                            ;;
+                            
+                            
                             mkdir $tmpdir
                             wget -qO ~/$tmpdir/transmission-settings.json "$transmissionjson"
                             
-                            echo  "Please enter the ruTorrent password from your Account overview page:"
+                            echo  "Please enter the Transmission password from your Account overview page:"
                             read -ep pass
                             
                             sed -i "s/USERNAME-CHANGEME/$(whoami)/" ~/$tmpdir/transmission-settings.json
