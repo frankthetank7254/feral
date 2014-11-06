@@ -152,9 +152,11 @@ then
                             echo
                             echo -e "\033[32m""$URL""\e[0m"
                             echo
-                            echo -e "2: Open Transdroid/Transdrone and Go to:" "\033[36m""Settings > System > Import settings""\e[0m"
+                            echo -e "2: Open Transdroid/Transdrone and Go to:" "\033[36m""Settings > System > Export settings""\e[0ms so that the appropriate folder is created."
                             echo
-                            echo "3: You will be told which directory the file is required to be in for import. Copy it there then import it."
+                            echo -e "3: Open Transdroid/Transdrone and Go to:" "\033[36m""Settings > System > Import settings""\e[0m"
+                            echo
+                            echo "4: You will be told which directory the file is required to be in for import. Copy it there then import it."
                             echo
                             read -ep "After you have downloaded the config file, press ENTER to clean up." useless
                             echo
@@ -210,9 +212,11 @@ then
                             echo
                             echo -e "\033[32m""$URL""\e[0m"
                             echo
-                            echo -e "2: Open Transdroid/Transdrone and Go to:" "\033[36m""Settings > System > Import settings""\e[0m"
+                            echo -e "2: Open Transdroid/Transdrone and Go to:" "\033[36m""Settings > System > Export settings""\e[0ms so that the appropriate folder is created."
                             echo
-                            echo "3: You will be told which directory the file is required to be in for import. Copy it there then import it."
+                            echo -e "3: Open Transdroid/Transdrone and Go to:" "\033[36m""Settings > System > Import settings""\e[0m"
+                            echo
+                            echo "4: You will be told which directory the file is required to be in for import. Copy it there then import it."
                             echo
                             read -ep "After you have downloaded the config file, press ENTER to clean up." useless
                             echo
@@ -268,9 +272,11 @@ then
                             echo
                             echo -e "\033[32m""$URL""\e[0m"
                             echo
-                            echo -e "2: Open Transdroid/Transdrone and Go to:" "\033[36m""Settings > System > Import settings""\e[0m"
+                            echo -e "2: Open Transdroid/Transdrone and Go to:" "\033[36m""Settings > System > Export settings""\e[0ms so that the appropriate folder is created."
                             echo
-                            echo "3: You will be told which directory the file is required to be in for import. Copy it there then import it."
+                            echo -e "3: Open Transdroid/Transdrone and Go to:" "\033[36m""Settings > System > Import settings""\e[0m"
+                            echo
+                            echo "4: You will be told which directory the file is required to be in for import. Copy it there then import it."
                             echo
                             read -ep "After you have downloaded the config file, press ENTER to clean up." useless
                             echo
