@@ -125,7 +125,7 @@ then
                             echo
                             echo -e "\033[32m""$URL/rtorrent.png""\e[0m"
                             echo
-                            echo -e "4: Open the rtorrent.png then scan to import""\e[0m"
+                            echo -e "4: Now scan with Transdroid to import""\e[0m"
                             echo
                             echo -e "Note: Imported connections will be merged with existing ones. Nothing will be lost."
                             echo
@@ -177,20 +177,15 @@ then
                             # LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 1 -t ANSI256 -o - "$URL"
                             LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 10 -t PNG "$(cat ~/.transdroid_import/settings.json)" -o ~/www/$(whoami).$(hostname)/public_html/$tmpdir2/deluge.png
                             #
+                            echo -e "1: Open Transdroid and go to:" "\033[36m""Settings > System > Import settings""\e[0m"
                             echo
-                            echo -e "\033[33m""Use the QRCode for quick access to the generated settings.json""\e[0m"
+                            echo -e "2: Click" "\033[36m""Use QR code""\e[0m"
                             echo
-                            echo "1: Download the generated config file to your phone using the following link"
+                            echo -e "3: Open this URL in a browser:"
                             echo
                             echo -e "\033[32m""$URL/deluge.png""\e[0m"
                             echo
-                            echo -e "2: Open Transdroid and go to:" "\033[36m""Settings > System > Export settings""\e[0m"
-                            echo
-                            echo -e "3: Take note of the location the file is being exported to then click" "\033[36m""OK""\e[0m"
-                            echo
-                            echo -e "4: Copy/move the" "\033[32m""settings.json""\e[0m" "to this directory. Overwrite if prompted."
-                            echo
-                            echo -e "5: Open Transdroid and Go to:" "\033[36m""Settings > System > Import settings""\e[0m"
+                            echo -e "4: Now scan with Transdroid to import""\e[0m"
                             echo
                             echo -e "Note: Imported connections will be merged with existing ones. Nothing will be lost."
                             echo
@@ -242,20 +237,15 @@ then
                             # LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 1 -t ANSI256 -o - "$URL"
                             LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 10 -t PNG "$(cat ~/.transdroid_import/settings.json)" -o ~/www/$(whoami).$(hostname)/public_html/$tmpdir2/transmission.png
                             #
+                            echo -e "1: Open Transdroid and go to:" "\033[36m""Settings > System > Import settings""\e[0m"
                             echo
-                            echo -e "\033[33m""Use the QRCode for quick access to the generated settings.json""\e[0m"
+                            echo -e "2: Click" "\033[36m""Use QR code""\e[0m"
                             echo
-                            echo "1: Download the generated config file to your phone using the following link"
+                            echo -e "3: Open this URL in a browser:"
                             echo
                             echo -e "\033[32m""$URL/transmission.png""\e[0m"
                             echo
-                            echo -e "2: Open Transdroid and go to:" "\033[36m""Settings > System > Export settings""\e[0m"
-                            echo
-                            echo -e "3: Take note of the location the file is being exported to then click" "\033[36m""OK""\e[0m"
-                            echo
-                            echo -e "4: Copy/move the" "\033[32m""settings.json""\e[0m" "to this directory. Overwrite if prompted."
-                            echo
-                            echo -e "5: Open Transdroid and Go to:" "\033[36m""Settings > System > Import settings""\e[0m"
+                            echo -e "4: Now scan with Transdroid to import""\e[0m"
                             echo
                             echo -e "Note: Imported connections will be merged with existing ones. Nothing will be lost."
                             echo
