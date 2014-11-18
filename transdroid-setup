@@ -1,24 +1,15 @@
 #!/bin/bash
 # Transdroid Setup
-scriptversion="1.0.1"
+scriptversion="1.0.4-dev"
 scriptname="transdroid.setup"
-# adamaze, randomessence
+# Author: adamaze (frankthetank7254)
+# Contributors: randomessence
 #
-# wget -qO ~/transdroid.setup http://git.io/pKBcwg && bash ~/transdroid.setup
+# wget -qO ~/transdroid.setup http://git.io/lU_B9w && bash ~/transdroid.setup
 #
 ############################
 ## Version History Starts ##
 ############################
-#
-# How do I customise this updater? 
-# 1: scriptversion="0.0.0" replace "0.0.0" with your script version. This will be shown to the user at the current version.
-# 2: scriptname="somescript" replace "somescript" with your script name. Make it unique to this script.
-# 3: Set the scripturl variable in the variable section to the RAW github URl of the script for updating.
-# 4: Insert your script in the "Script goes here" labelled section
-#
-# This updater deals with updating a single file, the "~/bin/somescript", by updating and switching to this script.
-#
-# http://grover.open2space.com/content/bash-script-menus-and-functions
 #
 ############################
 ### Version History Ends ###
@@ -28,11 +19,11 @@ scriptname="transdroid.setup"
 ###### Variable Start ######
 ############################
 #
-scripturl="https://raw.githubusercontent.com/frankthetank7254/feral/master/transdroid-setup"
+scripturl="https://raw.githubusercontent.com/feralhosting/feralfilehosting/master/Feral%20Wiki/Other%20software/Transdroid%20-%20Control%20rTorrent%20-%20Deluge%20-%20Transmission%20From%20Your%20Android%20Phone/scripts/transdroid-setup.sh"
 #
-rtorrentjson="https://raw.githubusercontent.com/frankthetank7254/feral/master/rtorrent-settings.json"
-delugejson="https://raw.githubusercontent.com/frankthetank7254/feral/master/deluge-settings.json"
-transmissionjson="https://raw.githubusercontent.com/frankthetank7254/feral/master/transmission-settings.json"
+rtorrentjson="https://raw.githubusercontent.com/feralhosting/feralfilehosting/master/Feral%20Wiki/Other%20software/Transdroid%20-%20Control%20rTorrent%20-%20Deluge%20-%20Transmission%20From%20Your%20Android%20Phone/json/rtorrent-settings.json"
+delugejson="https://raw.githubusercontent.com/feralhosting/feralfilehosting/master/Feral%20Wiki/Other%20software/Transdroid%20-%20Control%20rTorrent%20-%20Deluge%20-%20Transmission%20From%20Your%20Android%20Phone/json/deluge-settings.json"
+transmissionjson="https://raw.githubusercontent.com/feralhosting/feralfilehosting/master/Feral%20Wiki/Other%20software/Transdroid%20-%20Control%20rTorrent%20-%20Deluge%20-%20Transmission%20From%20Your%20Android%20Phone/json/transmission-settings.json"
 #
 option1="ruTorrent"
 option2="Deluge"
@@ -45,7 +36,7 @@ tmpdir2="transdroid_import"
 # Random password generation
 randompass=$(< /dev/urandom tr -dc '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' | head -c20; echo;)
 #
-URL="https://$(whoami):$randompass@$(hostname -f)/$(whoami)/$tmpdir2/"
+URL="https://$(whoami):$randompass@$(hostname -f)/$(whoami)/$tmpdir2"
 #
 ############################
 ####### Variable End #######
@@ -55,26 +46,6 @@ URL="https://$(whoami):$randompass@$(hostname -f)/$(whoami)/$tmpdir2/"
 #### Self Updater Start ####
 ############################
 #
-[[ ! -d ~/bin ]] && mkdir -p ~/bin
-[[ ! -f ~/bin/"$scriptname" ]] && wget -qO ~/bin/"$scriptname" "$scripturl"
-#
-wget -qO ~/.000"$scriptname" "$scripturl"
-#
-if [[ $(sha256sum ~/.000"$scriptname" | awk '{print $1}') != $(sha256sum ~/bin/"$scriptname" | awk '{print $1}') ]]
-then
-    echo -e "#!/bin/bash\nwget -qO ~/bin/$scriptname $scripturl\ncd && rm -f $scriptname{.sh,}\nbash ~/bin/$scriptname\nexit" > ~/.111"$scriptname"
-    bash ~/.111"$scriptname"
-    exit
-else
-    if [[ -z $(ps x | fgrep "bash $HOME/bin/$scriptname" | grep -v grep | head -n 1 | awk '{print $1}') && $(ps x | fgrep "bash $HOME/bin/$scriptname" | grep -v grep | head -n 1 | awk '{print $1}') -ne "$$" ]]
-    then
-        echo -e "#!/bin/bash\ncd && rm -f $scriptname{.sh,}\nbash ~/bin/$scriptname\nexit" > ~/.222"$scriptname"
-        bash ~/.222"$scriptname"
-        exit
-    fi
-fi
-cd && rm -f .{000,111,222}"$scriptname"
-chmod -f 700 ~/bin/"$scriptname"
 #
 ############################
 ##### Self Updater End #####
@@ -132,7 +103,7 @@ then
                             #
                             mkdir -p ~/www/$(whoami).$(hostname)/public_html/$tmpdir2
                             #
-                            cp -f ~/$tmpdir1/settings.json ~/www/$(whoami).$(hostname)/public_html/$tmpdir2/settings.json
+                            # cp -f ~/$tmpdir1/settings.json ~/www/$(whoami).$(hostname)/public_html/$tmpdir2/settings.json
                             htpasswd -cbm ~/www/$(whoami).$(hostname -f)/public_html/$tmpdir2/.htpasswd "$(whoami)" "$randompass" > /dev/null 2>&1
                             #
                             if [[ -d ~/.nginx/conf.d/000-default-server.d ]]
@@ -143,21 +114,21 @@ then
                             #
                             echo -e 'AuthType Basic\nAuthName "'"$tmpdir2"'"\nAuthUserFile "'"$HOME"'/www/'$(whoami)'.'$(hostname -f)'/public_html/'"$tmpdir2"'/.htpasswd"\nRequire "'$(whoami)'"' > ~/www/$(whoami).$(hostname -f)/public_html/"$tmpdir2"/.htaccess
                             #
-                            LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 1 -t ANSI256 -o - "$URL"
+                            # LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 1 -t ANSI256 -o - "$URL"
+                            LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 10 -t PNG "$(cat ~/.transdroid_import/settings.json)" -o ~/www/$(whoami).$(hostname)/public_html/$tmpdir2/rtorrent.png
                             #
+                            echo -e "1: Open Transdroid and go to:" "\033[36m""Settings > System > Import settings""\e[0m"
                             echo
-                            echo -e "\033[33m""Use the QRCode for quick access to the generated settings.json""\e[0m"
+                            echo -e "2: Click" "\033[36m""Use QR code""\e[0m"
                             echo
-                            echo "1: Download the generated config file to your phone using the following link"
+                            echo -e "3: Open this URL in a browser:"
                             echo
-                            echo -e "\033[32m""$URL""\e[0m"
+                            echo -e "\033[32m""$URL/rtorrent.png""\e[0m"
                             echo
-                            echo -e "2: Open Transdroid/Transdrone and Go to:" "\033[36m""Settings > System > Export settings""\e[0ms and make note of the location.
+                            echo -e "4: Open the rtorrent.png then scan to import""\e[0m"
                             echo
-                            echo "3: Copy the newly downloaded settings.json file over the one you just exported."
+                            echo -e "Note: Imported connections will be merged with existing ones. Nothing will be lost."
                             echo
-                            echo -e "4: Open Transdroid/Transdrone and Go to:" "\033[36m""Settings > System > Import settings""\e[0m" 
-                            echo 
                             read -ep "After you have downloaded the config file, press ENTER to clean up." useless
                             echo
                             #
@@ -192,7 +163,7 @@ then
                             #
                             mkdir -p ~/www/$(whoami).$(hostname)/public_html/$tmpdir2
                             #
-                            cp -f ~/$tmpdir1/settings.json ~/www/$(whoami).$(hostname)/public_html/$tmpdir2/settings.json
+                            # cp -f ~/$tmpdir1/settings.json ~/www/$(whoami).$(hostname)/public_html/$tmpdir2/settings.json
                             htpasswd -cbm ~/www/$(whoami).$(hostname -f)/public_html/$tmpdir2/.htpasswd "$(whoami)" "$randompass" > /dev/null 2>&1
                             #
                             if [[ -d ~/.nginx/conf.d/000-default-server.d ]]
@@ -203,21 +174,26 @@ then
                             #
                             echo -e 'AuthType Basic\nAuthName "'"$tmpdir2"'"\nAuthUserFile "'"$HOME"'/www/'$(whoami)'.'$(hostname -f)'/public_html/'"$tmpdir2"'/.htpasswd"\nRequire "'$(whoami)'"' > ~/www/$(whoami).$(hostname -f)/public_html/"$tmpdir2"/.htaccess
                             #
-                            LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 1 -t ANSI256 -o - "$URL"
+                            # LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 1 -t ANSI256 -o - "$URL"
+                            LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 10 -t PNG "$(cat ~/.transdroid_import/settings.json)" -o ~/www/$(whoami).$(hostname)/public_html/$tmpdir2/deluge.png
                             #
                             echo
                             echo -e "\033[33m""Use the QRCode for quick access to the generated settings.json""\e[0m"
                             echo
                             echo "1: Download the generated config file to your phone using the following link"
                             echo
-                            echo -e "\033[32m""$URL""\e[0m"
+                            echo -e "\033[32m""$URL/deluge.png""\e[0m"
                             echo
-                            echo -e "2: Open Transdroid/Transdrone and Go to:" "\033[36m""Settings > System > Export settings""\e[0ms and make note of the location.
+                            echo -e "2: Open Transdroid and go to:" "\033[36m""Settings > System > Export settings""\e[0m"
                             echo
-                            echo "3: Copy the newly downloaded settings.json file over the one you just exported."
+                            echo -e "3: Take note of the location the file is being exported to then click" "\033[36m""OK""\e[0m"
                             echo
-                            echo -e "4: Open Transdroid/Transdrone and Go to:" "\033[36m""Settings > System > Import settings""\e[0m" 
-                            echo 
+                            echo -e "4: Copy/move the" "\033[32m""settings.json""\e[0m" "to this directory. Overwrite if prompted."
+                            echo
+                            echo -e "5: Open Transdroid and Go to:" "\033[36m""Settings > System > Import settings""\e[0m"
+                            echo
+                            echo -e "Note: Imported connections will be merged with existing ones. Nothing will be lost."
+                            echo
                             read -ep "After you have downloaded the config file, press ENTER to clean up." useless
                             echo
                             #
@@ -252,7 +228,7 @@ then
                             #
                             mkdir -p ~/www/$(whoami).$(hostname)/public_html/$tmpdir2
                             #
-                            cp -f ~/$tmpdir1/settings.json ~/www/$(whoami).$(hostname)/public_html/$tmpdir2/settings.json
+                            # cp -f ~/$tmpdir1/settings.json ~/www/$(whoami).$(hostname)/public_html/$tmpdir2/settings.json
                             htpasswd -cbm ~/www/$(whoami).$(hostname -f)/public_html/$tmpdir2/.htpasswd "$(whoami)" "$randompass" > /dev/null 2>&1
                             #
                             if [[ -d ~/.nginx/conf.d/000-default-server.d ]]
@@ -263,21 +239,26 @@ then
                             #
                             echo -e 'AuthType Basic\nAuthName "'"$tmpdir2"'"\nAuthUserFile "'"$HOME"'/www/'$(whoami)'.'$(hostname -f)'/public_html/'"$tmpdir2"'/.htpasswd"\nRequire "'$(whoami)'"' > ~/www/$(whoami).$(hostname -f)/public_html/"$tmpdir2"/.htaccess
                             #
-                            LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 1 -t ANSI256 -o - "$URL"
+                            # LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 1 -t ANSI256 -o - "$URL"
+                            LD_LIBRARY_PATH=~/.transdroid_import/usr/lib/x86_64-linux-gnu ~/.transdroid_import/usr/bin/qrencode -m 10 -t PNG "$(cat ~/.transdroid_import/settings.json)" -o ~/www/$(whoami).$(hostname)/public_html/$tmpdir2/transmission.png
                             #
                             echo
                             echo -e "\033[33m""Use the QRCode for quick access to the generated settings.json""\e[0m"
                             echo
                             echo "1: Download the generated config file to your phone using the following link"
                             echo
-                            echo -e "\033[32m""$URL""\e[0m"
+                            echo -e "\033[32m""$URL/transmission.png""\e[0m"
                             echo
-                            echo -e "2: Open Transdroid/Transdrone and Go to:" "\033[36m""Settings > System > Export settings""\e[0ms and make note of the location.
+                            echo -e "2: Open Transdroid and go to:" "\033[36m""Settings > System > Export settings""\e[0m"
                             echo
-                            echo "3: Copy the newly downloaded settings.json file over the one you just exported."
+                            echo -e "3: Take note of the location the file is being exported to then click" "\033[36m""OK""\e[0m"
                             echo
-                            echo -e "4: Open Transdroid/Transdrone and Go to:" "\033[36m""Settings > System > Import settings""\e[0m" 
-                            echo 
+                            echo -e "4: Copy/move the" "\033[32m""settings.json""\e[0m" "to this directory. Overwrite if prompted."
+                            echo
+                            echo -e "5: Open Transdroid and Go to:" "\033[36m""Settings > System > Import settings""\e[0m"
+                            echo
+                            echo -e "Note: Imported connections will be merged with existing ones. Nothing will be lost."
+                            echo
                             read -ep "After you have downloaded the config file, press ENTER to clean up." useless
                             echo
                             #
