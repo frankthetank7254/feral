@@ -1,0 +1,195 @@
+#!/bin/bash
+# Install btsync
+scriptversion="1.0.0"
+scriptname="install.btsync"
+# adamaze
+#
+# wget -qO ~/install.btsync http://git.io/zHDQGA && bash ~/install.btsync
+#
+############################
+## Version History Starts ##
+############################
+#
+# How do I customise this updater? 
+# 1: scriptversion="0.0.0" replace "0.0.0" with your script version. This will be shown to the user at the current version.
+# 2: scriptname="somescript" replace "somescript" with your script name. Make it unique to this script.
+# 3: Set the scripturl variable in the variable section to the RAW github URl of the script for updating.
+# 4: Insert your script in the "Script goes here" labelled section
+#
+# This updater deals with updating a single file, the "~/bin/somescript", by updating and switching to this script.
+#
+############################
+### Version History Ends ###
+############################
+#
+############################
+###### Variable Start ######
+############################
+#
+scripturl="https://raw.githubusercontent.com/feralhosting/feralfilehosting/master/Feral%20Wiki/Software/BitTorrent%20Sync%20btsync%20-%20basic%20setup/scripts/install.btsync"
+option1="Install BitTorrent-Sync"
+option2="Update BitTorrent-Sync"
+option3="Uninstall BitTorrent-Sync"
+option4="Quit"
+#
+############################
+####### Variable End #######
+############################
+#
+############################
+#### Self Updater Start ####
+############################
+#
+#[[ ! -d ~/bin ]] && mkdir -p ~/bin
+#[[ ! -f ~/bin/"$scriptname" ]] && wget -qO ~/bin/"$scriptname" "$scripturl"
+#
+#wget -qO ~/.000"$scriptname" "$scripturl"
+#
+#if [[ $(sha256sum ~/.000"$scriptname" | awk '{print $1}') != $(sha256sum ~/bin/"$scriptname" | awk '{print $1}') ]]
+#then
+#    echo -e "#!/bin/bash\nwget -qO ~/bin/$scriptname $scripturl\ncd && rm -f $scriptname{.sh,}\nbash ~/bin/$scriptname\nexit" > ~/.111"$scriptname"
+#    bash ~/.111"$scriptname"
+#    exit
+#else
+#    if [[ -z $(ps x | fgrep "bash $HOME/bin/$scriptname" | grep -v grep | head -n 1 | awk '{print $1}') && $(ps x | fgrep "bash $HOME/bin/$scriptname" | grep -v grep | head -n 1 | awk '{print $1}') -ne "$$" ]]
+#    then
+#        echo -e "#!/bin/bash\ncd && rm -f $scriptname{.sh,}\nbash ~/bin/$scriptname\nexit" > ~/.222"$scriptname"
+#        bash ~/.222"$scriptname"
+#        exit
+#    fi
+#fi
+#cd && rm -f .{000,111,222}"$scriptname"
+#chmod -f 700 ~/bin/"$scriptname"
+#
+############################
+##### Self Updater End #####
+############################
+#
+############################
+#### Core Script Starts ####
+############################
+#
+#echo
+#echo -e "Hello $(whoami), you have the latest version of the" "\033[36m""$scriptname""\e[0m" "script. This script version is:" "\033[31m""$scriptversion""\e[0m"
+#echo
+#read -ep "The scripts have been updated, do you wish to continue [y] or exit now [q] : " -i "y" updatestatus
+#echo
+#if [[ "$updatestatus" =~ ^[Yy]$ ]]
+#then
+#
+############################
+#### User Script Starts ####
+############################
+#
+echo This script will install, update, or uninstall BitTorrent Sync on your slot.
+echo
+showMenu () 
+{
+        echo "1) $option1"
+        echo "2) $option2"
+        echo "3) $option3"
+	echo "4) $option4"
+	echo
+}
+
+while [ 1 ]
+do
+	showMenu
+	read -e CHOICE
+	echo
+	case "$CHOICE" in
+		"1")
+			if [[ ! -d ~/btsync ]]
+			then
+			    mkdir -p ~/btsync
+			    wget -qO ~/btsync/btsync.tar.gz http://download.getsyncapp.com/endpoint/btsync/os/linux-x64/track/stable
+			    tar xf ~/btsync/btsync.tar.gz -C ~/btsync
+			    rm -f ~/btsync/btsync.tar.gz
+			    ~/btsync/btsync --dump-sample-config > ~/btsync/sync.conf
+			    sed -i 's|/home/user/.sync|'"$HOME"'/btsync/.sync|' ~/btsync/sync.conf
+			    sed -i 's|/var/run/btsync/|'"$HOME"'/btsync/|' ~/btsync/sync.conf
+			    sed -i 's|8888|'$(shuf -i 10000-49000 -n 1)'|' ~/btsync/sync.conf
+			    sed -i 's|"use_upnp" : true,|"use_upnp" : false,|' ~/btsync/sync.conf
+			    sed -i 's|//  ,"directory_root" : "/home/user/MySharedFolders/"|  ,"directory_root" : \"'"$HOME"'/\"|' ~/btsync/sync.conf
+			    sed -i 's|"/home/user/MySharedFolders/personal"|\"'"$HOME"'/btsync/sync_test\"|' ~/btsync/sync.conf
+			    sed -i 's|/home/user/bittorrent/|'"$HOME"'/btsync/|' ~/btsync/sync.conf
+			    ~/btsync/btsync --config ~/btsync/sync.conf
+			    echo
+			    echo You may access the WebUi here: http://$(hostname -f):$(sed -rn 's|.*"listen" : "0.0.0.0:(.*)".*|\1|p' ~/btsync/sync.conf)
+			    echo You may access BitTorrent Sync here: http://$(hostname -f):$(sed -rn 's|.*"listen" : "0.0.0.0:(.*)".*|\1|p' ~/btsync/sync.conf) >> ~/.bash_login
+			    echo
+			    echo Note: You need to accept the invalid certificate to access the GUI if you use https. Otherwise use http.
+			    crontab -l > ~/btsync/mycron
+			    echo "@reboot ~/btsync/btsync --config ~/btsync/sync.conf" >> ~/btsync/mycron
+			    crontab ~/btsync/mycron
+			    rm ~/btsync/mycron
+			    echo
+			    echo An entry has been created in your Crontab so that BitTorrent Sync will automatically start if your server reboots.
+			    echo
+			else
+			    echo -e "\033[32m""The folder exists and the process may be running already.""\e[0m"
+			    echo
+			    echo $(ps x | grep '/btsync' | grep -v grep)
+			    echo
+			    echo -e "\033[32m""Perhaps you meant to update or uninstall BitTorrent Sync?""\e[0m"
+			    echo
+			fi
+			;;
+		"2")
+			if [[ -d ~/btsync ]]
+			then
+			    killall -u $(whoami) btsync
+                            mkdir -p ~/btsync
+                            wget -qO ~/btsync/btsync.tar.gz http://download.getsyncapp.com/endpoint/btsync/os/linux-x64/track/stable
+                            tar xf ~/btsync/btsync.tar.gz -C ~/btsync
+                            rm -f ~/btsync/btsync.tar.gz
+                            mv -f ~/btsync/sync.conf ~/btsync/sync.conf.old
+			    ~/btsync/btsync --dump-sample-config > ~/btsync/sync.conf
+			    sed -i 's|/home/user/.sync|'"$HOME"'/btsync/.sync|' ~/btsync/sync.conf
+                            sed -i 's|/var/run/btsync/|'"$HOME"'/btsync/|' ~/btsync/sync.conf
+			    sed -i 's|8888|'$(grep 'listen" :' ~/btsync/sync.conf.old | awk -F ":" '{print substr($3,1,5)}')'|' ~/btsync/sync.conf
+                            sed -i 's|"use_upnp" : true,|"use_upnp" : false,|' ~/btsync/sync.conf
+                            sed -i 's|//  ,"directory_root" : "/home/user/MySharedFolders/"|  ,"directory_root" : \"'"$HOME"'/\"|' ~/btsync/sync.conf
+                            sed -i 's|"/home/user/MySharedFolders/personal"|\"'"$HOME"'/btsync/sync_test\"|' ~/btsync/sync.conf
+                            sed -i 's|/home/user/bittorrent/|'"$HOME"'/btsync/|' ~/btsync/sync.conf
+                            ~/btsync/btsync --config ~/btsync/sync.conf
+                            echo
+                            echo You may access the WebUi here: http://$(hostname -f):$(sed -rn 's|.*"listen" : "0.0.0.0:(.*)".*|\1|p' ~/btsync/sync.conf)
+                            echo
+                            echo "Note: The link has not changed from the previous version"
+			    echo
+			else
+			    echo "It looks like BitTorrent Sync isnt actually installed. Perhaps you meant to install it?"
+			    echo
+			fi
+			;;
+		"3")
+			killall -u $(whoami) btsync
+			rm -rf ~/btsync
+			echo "BitTorrent Sync has been stopped and the btsync directory has been removed."
+			echo
+			;;
+		"4")
+			echo "You chose to quit the script"
+			echo
+			exit
+			;;
+	esac
+done
+
+#
+############################
+##### User Script End  #####
+############################
+#
+#else
+echo -e "You chose to exit after updating the scripts."
+echo
+cd && bash
+exit 1
+#fi
+#
+############################
+##### Core Script Ends #####
+############################
+#
