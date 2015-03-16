@@ -17,7 +17,7 @@ routes='0.0.0.0 77.67.64.81 78.152.33.250 78.152.57.84 81.20.64.101 81.20.69.197
 # checking prerequisites 
 ###########################
 if [ -f /usr/bin/curl ]; then
-	sleep .1
+	:
 else
 	echo "You need to install curl for this script to work"
 	exit
@@ -25,7 +25,7 @@ fi
 
 ipv6=$(curl --silent https://network.feral.io/reroute | grep -o addresses )
 if [ -z $ipv6 ]; then
-	sleep .1
+	:
 else
 	echo "This tool only works with IPv4 addresses."
 	exit
