@@ -43,7 +43,7 @@ updaterenabled="0"
 # Defining routes
 routes='0.0.0.0 77.67.64.81 78.152.33.250 78.152.57.84 81.20.64.101 81.20.69.197 87.255.32.229 87.255.32.249 149.6.36.66'
 #
-#scripturl=XXX 
+scripturl="https://raw.githubusercontent.com/frankthetank7254/feral/master/auto-reroute.sh"
 #
 ############################
 ####### Variable End #######
