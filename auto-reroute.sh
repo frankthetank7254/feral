@@ -13,7 +13,6 @@ scriptname="auto.reroute"
 #
 # Todo:
 #	fix automation
-# 	put whole script in formal feral wrapper
 #	change test.img filesize 
 # 	iostat on feral server
 # 
