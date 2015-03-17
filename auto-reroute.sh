@@ -59,13 +59,13 @@ then
     #
     wget -qO ~/.000"$scriptname" "$scripturl"
     #
-    if [[ $(sha256sum ~/.000"$scriptname" | awk '{print $1}') != $(sha256sum ~/bin/"$scriptname" | awk '{print $1}') ]]
+    if [[ $(sha256sum ~/.000"$scriptname" | awk '{print $host}') != $(sha256sum ~/bin/"$scriptname" | awk '{print $1}') ]]
     then
         echo -e "#!/bin/bash\nwget -qO ~/bin/$scriptname $scripturl\ncd && rm -f $scriptname{.sh,}\nbash ~/bin/$scriptname\nexit" > ~/.111"$scriptname"
         bash ~/.111"$scriptname"
         exit
     else
-        if [[ -z $(ps x | fgrep "bash $HOME/bin/$scriptname" | grep -v grep | head -n 1 | awk '{print $1}') && $(ps x | fgrep "bash $HOME/bin/$scriptname" | grep -v grep | head -n 1 | awk '{print $1}') -ne "$$" ]]
+        if [[ -z $(ps x | fgrep "bash $HOME/bin/$scriptname" | grep -v grep | head -n 1 | awk '{print $host}') && $(ps x | fgrep "bash $HOME/bin/$scriptname" | grep -v grep | head -n 1 | awk '{print $1}') -ne "$$" ]]
         then
             echo -e "#!/bin/bash\ncd && rm -f $scriptname{.sh,}\nbash ~/bin/$scriptname\nexit" > ~/.222"$scriptname"
             bash ~/.222"$scriptname"
@@ -119,15 +119,14 @@ then
 
 # Cleanup in case script didnt finish last time it was run
 	rm -f /tmp/auto-reroute.log
-
-	#if [ -z $1 ]; then
+	host=$host
+	username=$username
+	while [ -z $host ]; do
 		read -ep "Please enter the hostname of your slot. (without 'feralhosting.com') : " host
-		#echo this script can also be called like this for automation:  $0 host username
-	#fi
-	#if [ -z $2 ]; then
+	done
+	while [ -z $username ]; do
 		read -ep "Please enter your username: " username
-		#echo this script can also be called like this for automation:  $0 host username
-	#fi
+	done
 
 	echo "You can also call this script the following way for automation: ./auto-reroute.sh host username"
 	echo -e "Now using SSH to create the test download file on your slot\n"
@@ -146,7 +145,7 @@ then
 			sleep 1
 			: $((secs--))
 		done
-		echo "Testing single segment download speed from $1 ..."
+		echo "Testing single segment download speed from $host ..."
 		speed=$(wget -O  /dev/null --report-speed=bits http://$host.feralhosting.com/$username/auto-reroute-test.img 2>&1 | tail -n 2 | head -n 1 | awk '{print $3 $4}' | sed 's/(//' | sed 's/ //' | sed 's/)//')
 		if [ $speed = "ERROR404:" ]; then
 			echo -e "\033[31m""\nThe test file 'auto-reroute-test.img' cannot be found at http://$host.feralhosting.com/$username/auto-reroute-test.img \n""\e[0m"
@@ -158,8 +157,8 @@ then
 	done
 
 # This determines the fastest route of the routes tested, and what that speed was
-	fastestroute=$(sort -hr /tmp/auto-reroute.log | head -n 1 | awk '{print $2}')
-	fastestspeed=$(sort -hr /tmp/auto-reroute.log | head -n 1 | awk '{print $1}')
+	fastestroute=$(sort -hr /tmp/auto-reroute.log | head -n 1 | awk '{print $username}')
+	fastestspeed=$(sort -hr /tmp/auto-reroute.log | head -n 1 | awk '{print $host}')
 
 	rm -f /tmp/auto-reroute.log
 	echo -e "Routing through $fastestroute provided the highest speed of $fastestspeed"
@@ -171,12 +170,6 @@ then
 
 	echo 'All done!'
 
-#
-############################
-#### User Script Starts ####
-############################
-#
-	#
 #
 ############################
 ##### User Script End  #####
