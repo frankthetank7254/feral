@@ -12,7 +12,6 @@ scriptname="auto.reroute"
 ############################
 #
 # Todo:
-#	fix automationh
 #	change test.img filesize 
 # 	iostat on feral server
 # 
@@ -87,13 +86,13 @@ fi
 #### Core Script Starts ####
 ############################
 #
-echo
-echo -e "Hello $(whoami), you have the latest version of the" "\033[36m""$scriptname""\e[0m" "script. This script version is:" "\033[31m""$scriptversion""\e[0m"
-echo
-read -ep "The script has been updated, enter [y] to continue or [q] to exit: " -i "y" updatestatus
-echo
-if [[ "$updatestatus" =~ ^[Yy]$ ]]
-then
+#echo
+#echo -e "Hello $(whoami), you have the latest version of the" "\033[36m""$scriptname""\e[0m" "script. This script version is:" "\033[31m""$scriptversion""\e[0m"
+#echo
+#read -ep "The script has been updated, enter [y] to continue or [q] to exit: " -i "y" updatestatus
+#echo
+#if [[ "$updatestatus" =~ ^[Yy]$ ]]
+#then
 #
 ############################
 #### User Script Starts ####
@@ -119,16 +118,17 @@ then
 
 # Cleanup in case script didnt finish last time it was run
 	rm -f /tmp/auto-reroute.log
-	host=$host
-	username=$username
+
+	host=$1
+	username=$2
 	while [ -z $host ]; do
 		read -ep "Please enter the hostname of your slot. (without 'feralhosting.com') : " host
 	done
 	while [ -z $username ]; do
 		read -ep "Please enter your username: " username
+		echo -e "\033[32m""\nYou can also call this script the following way for automation: $0 host username\n""\e[0m"
 	done
 
-	echo "You can also call this script the following way for automation: ./auto-reroute.sh host username"
 	echo -e "Now using SSH to create the test download file on your slot\n"
 	ssh $username@$host.feralhosting.com 'fallocate -l 10M ~/www/$(whoami).$(hostname -f)/public_html/auto-reroute-test.img'
 
@@ -175,12 +175,12 @@ then
 ##### User Script End  #####
 ############################
 #
-else
-    echo -e "You chose to exit after updating the scripts."
-    echo
-    cd && bash
-    exit 1
-fi
+#else
+#    echo -e "You chose to exit after updating the scripts."
+#    echo
+#    cd && bash
+#    exit 1
+#fi
 #
 ############################
 ##### Core Script Ends #####
