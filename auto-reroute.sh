@@ -5,7 +5,7 @@ scriptversion="0.5.0"
 scriptname="auto.reroute"
 # adamaze
 #
-# Bash Command XXX
+# wget -qO ~/auto-reroute.sh http://git.io/hsFb && bash ~/auto-reroute.sh
 #
 ############################
 #### Script Notes Start ####
