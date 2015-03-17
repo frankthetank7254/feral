@@ -12,7 +12,7 @@ scriptname="auto.reroute"
 ############################
 #
 # Todo:
-#	fix automation
+#	fix automationh
 #	change test.img filesize 
 # 	iostat on feral server
 # 
@@ -131,7 +131,7 @@ then
 
 	echo "You can also call this script the following way for automation: ./auto-reroute.sh host username"
 	echo -e "Now using SSH to create the test download file on your slot\n"
-	ssh $username@$host.feralhosting.com 'fallocate -l 10M ~/www/$(whoami).$(hostname)/public_html/auto-reroute-test.img'
+	ssh $username@$host.feralhosting.com 'fallocate -l 10M ~/www/$(whoami).$(hostname -f)/public_html/auto-reroute-test.img'
 
 # here is the meat and potatoes
 	for route in $routes
@@ -167,7 +167,7 @@ then
 	curl 'https://network.feral.io/reroute' --data "nh=$fastestroute" 2>/dev/null > /dev/null
 	echo "Please wait two minutes for route change to take effect..."
 	echo "Now using SSH to remove the test download file"
-	ssh $username@$host.feralhosting.com rm '~/www/$(whoami).$(hostname)/public_html/auto-reroute-test.img'
+	ssh $username@$host.feralhosting.com rm '~/www/$(whoami).$(hostname -f)/public_html/auto-reroute-test.img'
 
 	echo 'All done!'
 
