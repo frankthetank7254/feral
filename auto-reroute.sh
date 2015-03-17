@@ -137,7 +137,7 @@ then
 	for route in $routes
 	do
 		echo "Setting route to $route ..."
-		curl 'https://network.feral.io/reroute' --data "nh=$route" 2>/dev/null > /dev/null
+		curl 'https://network.feral.io/reroute' --data "nh=$route" >/dev/null 2>&1
 		echo "Waiting 2 minutes for route change to take effect..."
 # edit this next line to "2 * 60" when done testing
 		secs=$((2 * 60))
@@ -164,7 +164,7 @@ then
 	rm -f /tmp/auto-reroute.log
 	echo -e "Routing through $fastestroute provided the highest speed of $fastestspeed"
 	echo "Setting route to $fastestroute ..."
-	curl 'https://network.feral.io/reroute' --data "nh=$fastestroute" 2>/dev/null > /dev/null
+	curl 'https://network.feral.io/reroute' --data "nh=$fastestroute" >/dev/null 2>&1
 	echo "Please wait two minutes for route change to take effect..."
 	echo "Now using SSH to remove the test download file"
 	ssh $username@$host.feralhosting.com rm '~/www/$(whoami).$(hostname -f)/public_html/auto-reroute-test.img'
