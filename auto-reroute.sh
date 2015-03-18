@@ -139,7 +139,7 @@ fi
 		curl 'https://network.feral.io/reroute' --data "nh=$route" >/dev/null 2>&1
 		echo "Waiting 2 minutes for route change to take effect..."
 # edit this next line to "2 * 60" when done testing
-		secs=$((2 * 60))
+		secs=$((2 * 2))
 		while [ $secs -gt 0 ]; do
 			echo -ne "$secs\033[0K\r"
 			sleep 1
@@ -157,8 +157,8 @@ fi
 	done
 
 # This determines the fastest route of the routes tested, and what that speed was
-	fastestroute=$(sort -hr /tmp/auto-reroute.log | head -n 1 | awk '{print $host')
-	fastestspeed=$(sort -hr /tmp/auto-reroute.log | head -n 1 | awk '{print $username}')
+	fastestroute=$(sort -hr /tmp/auto-reroute.log | head -n 1 | awk '{print $2}')
+	fastestspeed=$(sort -hr /tmp/auto-reroute.log | head -n 1 | awk '{print $1}')
 
 	rm -f /tmp/auto-reroute.log
 	echo -e "Routing through $fastestroute provided the highest speed of $fastestspeed"
