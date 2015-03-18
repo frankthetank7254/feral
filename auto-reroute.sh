@@ -139,7 +139,7 @@ fi
 		curl 'https://network.feral.io/reroute' --data "nh=$route" >/dev/null 2>&1
 		echo "Waiting 2 minutes for route change to take effect..."
 # edit this next line to "2 * 60" when done testing
-		secs=$((2 * 2))
+		secs=$((2 * 60))
 		while [ $secs -gt 0 ]; do
 			echo -ne "$secs\033[0K\r"
 			sleep 1
