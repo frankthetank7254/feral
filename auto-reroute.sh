@@ -151,14 +151,14 @@ fi
 			echo -e "\033[31m""\nThe test file 'auto-reroute-test.img' cannot be found at http://$host.feralhosting.com/$username/auto-reroute-test.img \n""\e[0m"
 			exit
 		fi
-		echo "routing through $route gets $speed"
+		echo -e "\033[32m""routing through $route results in $speed""\e[0m"
 		echo 
 		echo "$speed $route" >> /tmp/auto-reroute.log
 	done
 
 # This determines the fastest route of the routes tested, and what that speed was
-	fastestroute=$(sort -hr /tmp/auto-reroute.log | head -n 1 | awk '{print $username}')
-	fastestspeed=$(sort -hr /tmp/auto-reroute.log | head -n 1 | awk '{print $host}')
+	fastestroute=$(sort -hr /tmp/auto-reroute.log | head -n 1 | awk '{print $host')
+	fastestspeed=$(sort -hr /tmp/auto-reroute.log | head -n 1 | awk '{print $username}')
 
 	rm -f /tmp/auto-reroute.log
 	echo -e "Routing through $fastestroute provided the highest speed of $fastestspeed"
