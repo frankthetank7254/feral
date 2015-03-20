@@ -90,7 +90,7 @@ fi
 #### User Script Starts ####
 ############################
 #
-mkdir -p ~/bin && bash
+mkdir -p ~/bin
 wget -qO ~/znc.tar.gz http://znc.in/releases/znc-latest.tar.gz
 tar xf ~/znc.tar.gz && cd ~/znc-1.*
 ./configure --prefix=$HOME
