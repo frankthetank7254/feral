@@ -90,7 +90,7 @@ fi
 #### User Script Starts ####
 ############################
 #
-echo "This script will download and install znc on your slot. It may take a few minutes..."
+echo -e "\033[33m""This script will download and install znc on your slot. It may take a few minutes...""\e[0m"
 sleep 3
 mkdir -p ~/bin
 wget -qO ~/znc.tar.gz http://znc.in/releases/znc-latest.tar.gz
