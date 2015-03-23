@@ -103,22 +103,15 @@ cd && rm -rf znc{-1.*,.tar.gz}
 echo -e "\033[33m""\nNow that ZNC has been installed, configured, and started, we will make sure it starts if/when your server reboots.""\e[0m"
 #
 # adding to cron
-tmpnum=$(shuf -i 10001-20000 -n 1) 
-if [ "$(crontab -l)" == "no crontab for $(whoami)" ]; then
-        echo "crontab does not currently exist, so we are creating one"
-        echo "@reboot ~/bin/znc" >> ~/crontab.$tmpnum.tmp
-        crontab ~/crontab.$tmpnum.tmp
-        rm ~/crontab.$tmpnum.tmp
+tmpcron=$(mktemp)
+        if [ "$(crontab -l 2> /dev/null | grep -c znc)" == "0" ]; then
+        echo "appending znc to crontab."
+        crontab -l 2> /dev/null > "$tmpcron"
+        echo "@reboot ~/bin/znc" >> "$tmpcron"
+        crontab "$tmpcron"
+        rm "$tmpcron"
 else
-        if [ $(crontab -l | grep -c znc) == "0" ]; then
-                echo "crontab does exist, and znc is not in there, so we are appending it"
-                crontab -l > ~/crontab.$tmpnum.tmp   
-                echo "@reboot ~/bin/znc" >> ~/crontab.$tmpnum.tmp
-                crontab ~/crontab.$tmpnum.tmp
-                rm ~/crontab.$tmpnum.tmp
-        else
-                echo "znc is already in crontab"
-        fi
+        echo "znc is already in crontab"
 fi
 # give user the full URL
 echo -e "\nClick on the URL below to do additional configuration if needed"
