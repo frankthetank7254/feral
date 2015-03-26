@@ -12,7 +12,7 @@ for i in "${routes[@]}"
 do
 	((count++))
 	echo "Testing single segment download speed from ${route_names[$count]}..."
-	speed=$(wget -O  /dev/null --report-speed=bits ${test_files[$count]} 2>&1 | tail -n 2 | head -n 1 | awk '{print $3 $4}' | sed 's/(//' | sed 's/ //' | sed 's/)//')
+	speed=$(wget -O  /dev/null ${test_files[$count]} 2>&1 | tail -n 2 | head -n 1 | awk '{print $3 $4}' | sed 's/(//' | sed 's/ //' | sed 's/)//')
 	if [ $speed = "ERROR404:" ]; then
 		echo -e "\033[31m""\nThe test file cannot be found at ${test_files[$count]} \n""\e[0m"
 		exit
