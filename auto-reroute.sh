@@ -138,7 +138,7 @@ then
 	fastestroutename=$(sort -hr $reroute_log | head -n 1 | awk '{print $3}')
 	#
 	echo -e "Routing through $fastestroutename provided the highest speed of $fastestspeed"
-	echo "Setting route to $fastestroute ..."
+	echo "Setting route to $fastestroutename / $fastestroute ..."
 	curl 'https://network.feral.io/reroute' --data "nh=$fastestroute" >/dev/null 2>&1
 	echo "Please wait two minutes for route change to take effect..."
 	rm $reroute_log
