@@ -17,6 +17,11 @@ scriptname="auto-reroute"
 ############################
 ##### Script Notes End #####
 ############################
+# I didn't know where to put this as i didnt want to put it with the bulk of the script, and i wanted it checked early
+if [ "$(hostname -d)" == "feralhosting.com" ]; then
+	echo "it looks like you are trying to run this from a Feral slot, it is meant to be run from your home network"
+	exit
+fi
 #
 ############################
 ## Version History Starts ##
