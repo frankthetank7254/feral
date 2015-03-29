@@ -119,6 +119,11 @@ then
 #### User Script Starts ####
 ############################
 #
+# Prerequisite check
+command -v curl >/dev/null 2>&1 || { echo >&2 "This script requires curl but it's not installed.  Aborting."; exit 1; }
+command -v wget >/dev/null 2>&1 || { echo >&2 "This script requires wget but it's not installed.  Aborting."; exit 1; }
+#
+#
 	for i in "${routes[@]}"
 	do
 		((count++))
