@@ -4,21 +4,15 @@ scriptversion="1.0.0"
 scriptname="auto-reroute"
 # Author adamaze
 #
-# XXX
+# wget -O ~/auto-reroute.sh http://git.io/hsFb && bash ~/auto-reroute.sh
 #
 ############################
 #### Script Notes Start ####
 ############################
 #
-# This updater deals with updating a single file, the "~/bin/somescript", by updating and switching to this script.
-#
-# How do I customise this updater?
-#
-# 3: Set the scripturl variable in the variable section to the RAW github URl of the script for updating.
-# 4: Insert your script in the "User Script" labelled section - Indented by two tabs to be in line with the script.
-# 5: Disable the updater - you can either set "updaterenabled" variable to 0 in the variable section or use the argument nu when calling the script, for example - "somescript nu"
-# 6: quick load - use the argument qr when calling the script, for example - "somescript qr".
-# 7: To pass your own variables to the script start from $3 onwards.
+# This script is meant to be run on a linux machine at your home.
+# It will download test files using each of Feral's available routes, determine the fastest one, and then set that route for you.
+# You need wget and curl for this to work
 #
 ############################
 ##### Script Notes End #####
@@ -42,7 +36,7 @@ scriptname="auto-reroute"
 updaterenabled="0"
 #
 # This is the raw github url of the script to use with the built in updater.
-scripturl="XXX"
+scripturl="https://raw.githubusercontent.com/frankthetank7254/feral/master/auto-reroute.sh"
 #
 routes=(0.0.0.0 77.67.64.81 78.152.33.250 78.152.57.84 81.20.64.101 81.20.69.197 87.255.32.229 87.255.32.249)
 route_names=(Default GTT Atrato#1 Atrato#2 NTT#1 NTT#2 Fiber-Ring/Leaseweb#2 Fiber-Ring/Leaseweb#1)
@@ -147,6 +141,7 @@ then
 	echo "Setting route to $fastestroute ..."
 	curl 'https://network.feral.io/reroute' --data "nh=$fastestroute" >/dev/null 2>&1
 	echo "Please wait two minutes for route change to take effect..."
+	rm $reroute_log
 	#
 	echo 'All done!'
 #
