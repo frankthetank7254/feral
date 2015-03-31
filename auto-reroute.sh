@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script name goes here
+# Auto-reroute
 scriptversion="1.0.0"
 scriptname="auto-reroute"
 # Author adamaze
@@ -38,7 +38,7 @@ fi
 ############################
 #
 # Disables the built in script updater permanently.
-updaterenabled="0"
+updaterenabled="1"
 #
 # This is the raw github url of the script to use with the built in updater.
 scripturl="https://raw.githubusercontent.com/frankthetank7254/feral/master/auto-reroute.sh"
@@ -61,7 +61,7 @@ if [[ ! -z $1 && $1 == 'qr' ]] || [[ ! -z $2 && $2 == 'qr' ]];then echo -n '' > 
 #
 if [[ ! -z $1 && $1 == 'nu' ]] || [[ ! -z $2 && $2 == 'nu' ]]
 then
-    echo
+    echo 
     echo "The Updater has been temporarily disabled"
     echo
     scriptversion=""$scriptversion"-nu"
