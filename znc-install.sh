@@ -90,14 +90,42 @@ fi
 #### User Script Starts ####
 ############################
 #
+echo
+REPlY="n"
+read -p "Do you need the extra charset available in ZNC? (This is for non-english characters) [y/N]" -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+	if [ "$(dpkg-query -s libicu-dev 2>&1 | grep -c 'ok installed')" -eq 0 ]; then
+		echo -e "\033[33m""It looks like libicu-dev is not installed on your server.""\e[0m"
+		echo -e Please open a ticket: "\033[34m"https://www.feralhosting.com/manager/tickets/new"\e[0m"
+		echo "Paste the following into the ticket:"
+		echo
+		echo "Please can you install the ZNC 1.6 dependancy for charset
+
+https://packages.debian.org/wheezy/libicu-dev
+
+apt-get install libicu-dev
+
+Thank you."
+		echo
+		echo -e "\033[33m""Once you are notified that the dependancy has been installed, you can re-run this script""\e[0m"
+		exit
+	fi
+fi
+
 echo -e "\033[33m""This script will download and install znc on your slot. It may take a few minutes...""\e[0m"
 sleep 3
 mkdir -p ~/bin
 wget -qO ~/znc.tar.gz http://znc.in/releases/znc-latest.tar.gz
+cd ~/
 tar xf ~/znc.tar.gz && cd ~/znc-1.*
 ./configure --prefix=$HOME
 make && make install
 cd && rm -rf znc{-1.*,.tar.gz}
+echo
+echo -e "\033[33m""\nNow it is time for initial configuration...""\e[0m"
+echo
 ~/bin/znc --makeconf
 #
 echo -e "\033[33m""\nNow that ZNC has been installed, configured, and started, we will make sure it starts if/when your server reboots.""\e[0m"
