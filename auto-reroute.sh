@@ -4,7 +4,7 @@ scriptversion="1.0.0"
 scriptname="auto-reroute"
 # Author adamaze
 #
-# wget -O ~/auto-reroute.sh http://git.io/hsFb && bash ~/auto-reroute.sh
+# curl -s -L -o ~/auto-reroute.sh http://git.io/hsFb && bash ~/auto-reroute.sh
 #
 ############################
 #### Script Notes Start ####
