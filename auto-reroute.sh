@@ -54,15 +54,15 @@ reroute_log=/tmp/$(openssl rand -hex 10)
 #
 # Prerequisite check
 command -v curl >/dev/null 2>&1 || { echo >&2 "This script requires curl but it's not installed.  Aborting."; exit 1; }
-command -v wget >/dev/null 2>&1 || { echo >&2 "This script requires wget but it's not installed.  Aborting."; exit 1; }
 #
 #
 	for i in "${routes[@]}"
 	do
 		((count++))
 		echo "Testing single segment download speed from ${route_names[$count]}..."
-		speed=$(wget -O  /dev/null ${test_files[$count]} 2>&1 | tail -n 2 | head -n 1 | awk '{print $3 $4}' | sed 's/(//' | sed 's/ //' | sed 's/)//')
-		if [ $speed = "ERROR404:" ]; then
+		messyspeed=$(echo -n "scale=2; " && curl -s -L ${test_files[$count]} -w "%{speed_download}" -o /dev/null)
+		speed=$(echo $messyspeed/1048576| bc | sed 's/$/MB\/s/')	
+		if [ "$speed" = "ERROR404:" ]; then
 			echo -e "\033[31m""\nThe test file cannot be found at ${test_files[$count]} \n""\e[0m"
 			exit
 		fi
