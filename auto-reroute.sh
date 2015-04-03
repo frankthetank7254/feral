@@ -10,9 +10,9 @@ scriptname="auto-reroute"
 #### Script Notes Start ####
 ############################
 #
-# This script is meant to be run on a linux machine at your home.
+# This script is meant to be run on a machine at your home.
 # It will download test files using each of Feral's available routes, determine the fastest one, and then set that route for you.
-# You need wget and curl for this to work
+# You need curl for this to work
 #
 ############################
 ##### Script Notes End #####
