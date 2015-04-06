@@ -91,7 +91,7 @@ fi
 ############################
 #
 echo
-REPlY="n"
+REPLY="n"
 read -p "Do you need the extra charset available in ZNC? (This is for non-english characters) [y/N]" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
