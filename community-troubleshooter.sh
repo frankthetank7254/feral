@@ -1,5 +1,8 @@
 #!/bin/bash
 #
+#
+# wget -qO ~/community-troubleshooter.sh http://git.io/vewgm && bash ~/community-troubleshooter.sh
+#
 # Todo:
 # check to see if normal folders are there, (rtorrent, rutorrent, deluge, transmission, mysql)
 # 	maybe get a list of ALL default files/folders on a feral slot, and check for existance
