@@ -54,7 +54,11 @@ reroute_log=/tmp/$(openssl rand -hex 10)
 #
 # Prerequisite check
 command -v curl >/dev/null 2>&1 || { echo >&2 "This script requires curl but it's not installed.  Aborting."; exit 1; }
+command -v bc >/dev/null 2>&1 || { echo >&2 "This script requires bc but it's not installed.  Aborting."; exit 1; }
 #
+echo "Starting off by setting route to default to ensure accurate results."
+curl 'https://network.feral.io/reroute' --data "nh=$fastestroute" >/dev/null 2>&1
+echo "watiing two minutes for route change to take effect..."
 #
 	for i in "${routes[@]}"
 	do
@@ -71,9 +75,9 @@ command -v curl >/dev/null 2>&1 || { echo >&2 "This script requires curl but it'
 	                echo "$speed ${routes[$count]} ${route_names[$count]}" >> $reroute_log
 	done
 	#
-	fastestroute=$(sort -hr $reroute_log | head -n 1 | awk '{print $2}')
-	fastestspeed=$(sort -hr $reroute_log | head -n 1 | awk '{print $1}')
-	fastestroutename=$(sort -hr $reroute_log | head -n 1 | awk '{print $3}')
+	fastestroute=$(sort -gr $reroute_log | head -n 1 | awk '{print $2}')
+	fastestspeed=$(sort -gr $reroute_log | head -n 1 | awk '{print $1}')
+	fastestroutename=$(sort -gr $reroute_log | head -n 1 | awk '{print $3}')
 	#
 	echo -e "Routing through $fastestroutename provided the highest speed of $fastestspeed"
 	echo "Setting route to $fastestroutename / $fastestroute ..."
