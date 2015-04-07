@@ -59,6 +59,7 @@ command -v bc >/dev/null 2>&1 || { echo >&2 "This script requires bc but it's no
 echo "Starting off by setting route to default to ensure accurate results."
 curl 'https://network.feral.io/reroute' --data "nh=$fastestroute" >/dev/null 2>&1
 echo "watiing two minutes for route change to take effect..."
+sleep 120
 #
 	for i in "${routes[@]}"
 	do
