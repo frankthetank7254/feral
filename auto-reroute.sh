@@ -56,10 +56,14 @@ reroute_log=/tmp/$(openssl rand -hex 10)
 command -v curl >/dev/null 2>&1 || { echo >&2 "This script requires curl but it's not installed.  Aborting."; exit 1; }
 command -v bc >/dev/null 2>&1 || { echo >&2 "This script requires bc but it's not installed.  Aborting."; exit 1; }
 #
-echo "Starting off by setting route to default to ensure accurate results."
-curl 'https://network.feral.io/reroute' --data "nh=$fastestroute" >/dev/null 2>&1
-echo "watiing two minutes for route change to take effect..."
-sleep 120
+if [ $(curl -s https://network.feral.io/reroute | grep checked | grep -c 0.0.0.0) = 0  ]; then
+	echo "Starting off by setting route to default to ensure accurate results."
+	curl 'https://network.feral.io/reroute' --data "nh=0.0.0.0" >/dev/null 2>&1
+	echo "watiing two minutes for route change to take effect..."
+	sleep 120
+else
+	echo "You are currently using the default route"
+fi
 #
 	for i in "${routes[@]}"
 	do
