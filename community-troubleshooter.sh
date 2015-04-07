@@ -24,7 +24,12 @@ fi
 #
 echo "$(whoami)" on "$(hostname -f) on "$(date) > $logpath
 echo "Server has been up for $(uptime | awk '{print $3}') days." | tee -a $logpath
-echo >> $logpath
+echo | tee -a $logpath
+echo "For the past minute, the average CPU utilization has been $(uptime | awk '{print $10}')" | tee -a $logpath
+echo "For the past 5 minutes, the average CPU utilization has been $(uptime | awk '{print $11}')" | tee -a $logpath
+echo "For the past 15 minutes, the average CPU utilization has been $(uptime | awk '{print $12}')" | tee -a $logpath
+echo "As long as these numbers are below $(nproc), CPU usage is fine." | tee -a $logpath
+echo | tee -a $logpath
 echo "You are using $(du -sB GB ~/| awk '{print $1}') of space on your slot." | tee -a $logpath
 echo >> $logpath
 echo "Your disk is $(df -h $(df -h ~/ | grep dev | awk '{print $1}') | grep dev | awk '{print $5}') used. (not your quota, unless on Radon)" | tee -a $logpath
