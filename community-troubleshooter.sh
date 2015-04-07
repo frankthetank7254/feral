@@ -26,7 +26,7 @@ echo "$(whoami)" on "$(hostname -f) on "$(date) > $logpath
 echo >> $logpath
 echo "You are using $(du -sB GB ~/| awk '{print $1}') of space on your slot." | tee -a $logpath
 echo >> $logpath
-echo "Your disk is $(df -h $(df -h ~/ | grep dev | awk '{print $1}') | grep dev | awk '{print $5}') used." | tee -a $logpath
+echo "Your disk is $(df -h $(df -h ~/ | grep dev | awk '{print $1}') | grep dev | awk '{print $5}') used. (not your quota, unless on Radon)" | tee -a $logpath
 echo >> $logpath
 echo "For the next 30 seconds, your disk will be monitored to see how busy it is."
 echo "Disk utilization over 30 seconds" >> $logpath
@@ -34,6 +34,10 @@ iostat -x 5 7 -d $(df -h ~ | grep dev | awk '{print $1}') | sed '/^$/d'| grep -v
 echo | tee -a $logpath
 echo "Running proccesses:" | tee -a $logpath
 ps x --sort=command | tee -a $logpath
+echo | tee -a $logpath
+if [ $(ps aux | grep -v grep | grep -c plex) > 0 ];then
+	echo "Plex is already running on this server" | tee -a $logpath
+fi
 
 echo
 echo "Paste the following URL in chat, and someone may be able to help troubleshoot."
