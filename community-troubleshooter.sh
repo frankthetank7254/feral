@@ -23,6 +23,7 @@ else
 fi
 #
 echo "$(whoami)" on "$(hostname -f) on "$(date) > $logpath
+echo "Server has been up for $(uptime | awk '{print $3}') days." | tee -a $logpath
 echo >> $logpath
 echo "You are using $(du -sB GB ~/| awk '{print $1}') of space on your slot." | tee -a $logpath
 echo >> $logpath
