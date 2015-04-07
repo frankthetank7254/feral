@@ -33,6 +33,7 @@ echo | tee -a $logpath
 echo "You are using $(du -sB GB ~/| awk '{print $1}') of space on your slot." | tee -a $logpath
 echo >> $logpath
 echo "Your disk is $(df -h $(df -h ~/ | grep dev | awk '{print $1}') | grep dev | awk '{print $5}') used. (not your quota, unless on Radon)" | tee -a $logpath
+echo "The OS disk is $(df -h / | grep dev | awk '{print $5}') used. (there is an issue if it is %100)" | tee -a $logpath
 echo >> $logpath
 echo "For the next 30 seconds, your disk will be monitored to see how busy it is."
 echo "Disk utilization over 30 seconds" >> $logpath
