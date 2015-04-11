@@ -41,6 +41,19 @@ iostat -x 5 7 -d $(df -h ~ | grep dev | awk '{print $1}') | sed '/^$/d'| grep -v
 echo | tee -a $logpath
 echo "Running proccesses:" | tee -a $logpath
 ps x --sort=command | tee -a $logpath
+if [ -a ~/.private/rtorrent/.prevent-restart ];then
+	echo "rtorrent automatic restart is being prevented" | tee -a $logpath
+fi
+if [ -a ~/private/transmission/.prevent-restart ];then
+	echo "rtorrent automatic restart is being prevented" | tee -a $logpath
+fi
+if [ -a ~/private/deluge/.prevent-restart ];then
+	echo "deluge automatic restart is being prevented" | tee -a $logpath
+fi
+if [ -a ~/private/mysql/.prevent-restart ];then
+	echo "mysql automatic restart is being prevented" | tee -a $logpath
+fi
+
 echo | tee -a $logpath
 if [ $(ps aux | grep -v grep | grep -c plex) > 0 ];then
 	echo "Plex is already running on this server" | tee -a $logpath
@@ -49,3 +62,5 @@ fi
 echo
 echo "Paste the following URL in chat, and someone may be able to help troubleshoot."
 echo "https://$(hostname -f)/$(whoami)/tmp/$log"
+echo to delete this file, run the following:
+echo bash "~/community.troubleshooter -c"
