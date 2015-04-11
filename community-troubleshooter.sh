@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 #
-# wget -qO ~/community-troubleshooter.sh http://git.io/vewgm && bash ~/community-troubleshooter.sh
+# wget -qO ~/community-troubleshooter http://git.io/vewgm && bash ~/community-troubleshooter
 #
 # Todo:
 # check to see if normal folders are there, (rtorrent, rutorrent, deluge, transmission, mysql)
