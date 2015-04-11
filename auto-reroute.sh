@@ -59,7 +59,7 @@ command -v bc >/dev/null 2>&1 || { echo >&2 "This script requires bc but it's no
 if [ $(curl -s https://network.feral.io/reroute | grep checked | grep -c 0.0.0.0) = 0  ]; then
 	echo "Starting off by setting route to default to ensure accurate results."
 	curl 'https://network.feral.io/reroute' --data "nh=0.0.0.0" >/dev/null 2>&1
-	echo "watiing two minutes for route change to take effect..."
+	echo "Waiting two minutes for route change to take effect..."
 	sleep 120
 else
 	echo "You are currently using the default route"
