@@ -4,10 +4,9 @@
 ########################
 mkdir ~/iocheck
 log=~/iocheck/iocheck-$(date +%F.%H.%M.%S).log
-current_user=$(whoami)
 current_mountpoint=$(echo $HOME | awk -F "/" '{print $3}')
 current_disk=$(df | grep /$current_mountpoint | awk '{print $1}' |  awk -F "/" '{print $3}')
-disk_users=$(ls ~/../ | grep -v $current_user | grep -v "lost+found")
+disk_users=$(ls ~/../ | grep -v $(whoami) | grep -v "lost+found")
 number_of_disk_users=$(ls ~/../| grep -v lost+found | wc -w)
 grep_me=$(echo $disk_users | sed 's/ /\|/g')
 ########################
