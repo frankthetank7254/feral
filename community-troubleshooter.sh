@@ -25,19 +25,30 @@ fi
 echo "$(whoami)" on "$(hostname -f) on "$(date) > $logpath
 echo "Server has been up for $(uptime | awk '{print $3}') days." | tee -a $logpath
 echo | tee -a $logpath
+echo "#####################################################" | tee -a $logpath
+echo "#                     CPU Info                      #" | tee -a $logpath
+echo "#####################################################" | tee -a $logpath
+echo | tee -a $logpath
 echo "For the past minute, the average CPU utilization has been $(uptime | awk '{print $10}')" | tee -a $logpath
 echo "For the past 5 minutes, the average CPU utilization has been $(uptime | awk '{print $11}')" | tee -a $logpath
 echo "For the past 15 minutes, the average CPU utilization has been $(uptime | awk '{print $12}')" | tee -a $logpath
 echo "As long as these numbers are below $(nproc), CPU usage is fine." | tee -a $logpath
 echo | tee -a $logpath
+echo "#####################################################" | tee -a $logpath
+echo "#                  Hard Drive Info                  #" | tee -a $logpath
+echo "#####################################################" | tee -a $logpath
+echo | tee -a $logpath
 echo "You are using $(du -sB GB ~/| awk '{print $1}') of space on your slot." | tee -a $logpath
-echo >> $logpath
 echo "Your disk is $(df -h $(df -h ~/ | grep dev | awk '{print $1}') | grep dev | awk '{print $5}') used. (not your quota, unless on Radon)" | tee -a $logpath
 echo "The OS disk is $(df -h / | grep dev | awk '{print $5}') used. (there is an issue if it is %100)" | tee -a $logpath
 echo >> $logpath
 echo "For the next 30 seconds, your disk will be monitored to see how busy it is."
 echo "Disk utilization over 30 seconds" >> $logpath
 iostat -x 5 7 -d $(df -h ~ | grep dev | awk '{print $1}') | sed '/^$/d'| grep -v util | awk '{print $14}' | tail -n+3 | sed 's/^/%/' | tee -a $logpath
+echo | tee -a $logpath
+echo "#####################################################" | tee -a $logpath
+echo "#                   Process Info                    #" | tee -a $logpath
+echo "#####################################################" | tee -a $logpath
 echo | tee -a $logpath
 echo "Running proccesses:" | tee -a $logpath
 ps x --sort=command | tee -a $logpath
@@ -53,6 +64,10 @@ fi
 if [ -a ~/private/mysql/.prevent-restart ];then
 	echo "mysql automatic restart is being prevented" | tee -a $logpath
 fi
+echo | tee -a $logpath
+echo "#####################################################" | tee -a $logpath
+echo "#                    Other Info                     #" | tee -a $logpath
+echo "#####################################################" | tee -a $logpath
 echo | tee -a $logpath
 echo "Crontab entries:" | tee -a $logpath
 crontab -l | grep -v "^#" | tee -a $logpath
