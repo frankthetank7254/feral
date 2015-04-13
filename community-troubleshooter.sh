@@ -53,7 +53,16 @@ fi
 if [ -a ~/private/mysql/.prevent-restart ];then
 	echo "mysql automatic restart is being prevented" | tee -a $logpath
 fi
-
+echo | tee -a $logpath
+echo "Crontab entries:" | tee -a $logpath
+crontab -l | grep -v "^#" | tee -a $logpath
+echo | tee -a $logpath
+if [ $(ping -c 1 $(echo $SSH_CLIENT | awk '{print $1}') | grep transmitted | awk '{print $4}') = 1 ];then
+	echo "Latency to home network:" | tee -a $logpath
+	ping -c 5 $(echo $SSH_CLIENT | awk '{print $1}') | grep ttl | awk '{print $7 $8}' | sed 's/time=//' | tee -a $logpath
+else
+	echo "Home network not responding to pings for latency test" | tee -a $logpath
+fi
 echo | tee -a $logpath
 if [ $(ps aux | grep -v grep | grep -c plex) > 0 ];then
 	echo "Plex is already running on this server" | tee -a $logpath
