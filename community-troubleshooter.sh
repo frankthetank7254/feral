@@ -90,4 +90,4 @@ echo
 echo "Paste the following URL in chat, and someone may be able to help troubleshoot."
 echo -e "\033[34m""https://$(hostname -f)/$(whoami)/tmp/$log""\e[0m"
 echo to delete this file, run the following:
-echo bash "~/community.troubleshooter -c"
+echo bash "~/community-troubleshooter -c"
