@@ -30,7 +30,7 @@ echo "#####################################################" | tee -a $logpath
 echo "#                     CPU Info                      #" | tee -a $logpath
 echo "#####################################################" | tee -a $logpath
 echo | tee -a $logpath
-echo "Server has been up for $(uptime | awk '{print $3}') days." | tee -a $logpath
+echo "Server has been up for $(uptime | awk '{print $3 " " $4}' | sed 's/,//')." | tee -a $logpath
 echo "For the past minute, the average CPU utilization has been $(uptime | awk '{print $10}')" | tee -a $logpath
 echo "For the past 5 minutes, the average CPU utilization has been $(uptime | awk '{print $11}')" | tee -a $logpath
 echo "For the past 15 minutes, the average CPU utilization has been $(uptime | awk '{print $12}')" | tee -a $logpath
