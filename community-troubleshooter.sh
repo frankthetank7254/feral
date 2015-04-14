@@ -71,8 +71,12 @@ echo "#####################################################" | tee -a $logpath
 echo "#                    Other Info                     #" | tee -a $logpath
 echo "#####################################################" | tee -a $logpath
 echo | tee -a $logpath
-echo "Crontab entries:" | tee -a $logpath
-crontab -l | grep -v "^#" | tee -a $logpath
+if [ $(crontab -l | grep -v "^#" | wc -l) -gt 0 ];then
+	echo "Crontab entries:" | tee -a $logpath
+	crontab -l | grep -v "^#" | tee -a $logpath
+else
+	echo Crontab is empty | tee -a $logpath	
+fi
 echo | tee -a $logpath
 echo -e "\033[33m""Testing latency to home router...""\e[0m"
 if [ $(ping -c 1 $(echo $SSH_CLIENT | awk '{print $1}') | grep transmitted | awk '{print $4}') = 1 ];then
