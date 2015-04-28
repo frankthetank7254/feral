@@ -55,10 +55,11 @@ reroute_log=/tmp/$(openssl rand -hex 10)
 # Prerequisite check
 command -v curl >/dev/null 2>&1 || { echo >&2 "This script requires curl but it's not installed.  Aborting."; exit 1; }
 command -v bc >/dev/null 2>&1 || { echo >&2 "This script requires bc but it's not installed.  Aborting."; exit 1; }
+command -v openssl >/dev/null 2>&1 || { echo >&2 "This script requires openssl but it's not installed.  Aborting."; exit 1; }
 #
-if [ $(curl -s https://network.feral.io/reroute | grep checked | grep -c 0.0.0.0) = 0  ]; then
+if [ $(curl -4 -s https://network.feral.io/reroute | grep checked | grep -c 0.0.0.0) = 0  ]; then
 	echo "Starting off by setting route to default to ensure accurate results."
-	curl 'https://network.feral.io/reroute' --data "nh=0.0.0.0" >/dev/null 2>&1
+	curl -4 'https://network.feral.io/reroute' --data "nh=0.0.0.0" >/dev/null 2>&1
 	echo "Waiting two minutes for route change to take effect..."
 	sleep 120
 else
@@ -69,7 +70,7 @@ fi
 	do
 		((count++))
 		echo "Testing single segment download speed from ${route_names[$count]}..."
-		messyspeed=$(echo -n "scale=2; " && curl -s -L ${test_files[$count]} -w "%{speed_download}" -o /dev/null)
+		messyspeed=$(echo -n "scale=2; " && curl -4 -s -L ${test_files[$count]} -w "%{speed_download}" -o /dev/null)
 		speed=$(echo $messyspeed/1048576| bc | sed 's/$/MB\/s/')	
 		if [ "$speed" = "ERROR404:" ]; then
 			echo -e "\033[31m""\nThe test file cannot be found at ${test_files[$count]} \n""\e[0m"
@@ -86,7 +87,7 @@ fi
 	#
 	echo -e "Routing through $fastestroutename provided the highest speed of $fastestspeed"
 	echo "Setting route to $fastestroutename / $fastestroute ..."
-	curl 'https://network.feral.io/reroute' --data "nh=$fastestroute" >/dev/null 2>&1
+	curl -4 'https://network.feral.io/reroute' --data "nh=$fastestroute" >/dev/null 2>&1
 	echo "Please wait two minutes for route change to take effect..."
 	rm $reroute_log
 	#
