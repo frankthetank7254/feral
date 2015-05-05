@@ -1,6 +1,6 @@
 #!/bin/bash
 # Auto-reroute
-scriptversion="1.0.0"
+scriptversion="1.0.1"
 scriptname="auto-reroute"
 # Author adamaze
 #
@@ -12,7 +12,8 @@ scriptname="auto-reroute"
 #
 # This script is meant to be run on a machine at your home.
 # It will download test files using each of Feral's available routes, determine the fastest one, and then set that route for you.
-# You need curl for this to work
+# You need curl, bc, and openssl for this to work.
+# Because of an added check in v1.0.1 you can be sure that when the script has ended, the route change has actually taken effect, so speedy downloads can begin right away.
 #
 ############################
 ##### Script Notes End #####
@@ -27,6 +28,7 @@ fi
 ## Version History Starts ##
 ############################
 #
+# v1.0.1 - Added route change verification to speed up script. (no more waiting full two minutes)
 # v1.0.0 - First version with official test downloads.
 #
 ############################
@@ -49,6 +51,23 @@ reroute_log=/tmp/$(openssl rand -hex 10)
 ############################
 #
 ############################
+####### Functions Start ####
+############################
+#
+#
+function reroute_check {
+ext_IP=$(curl -4 -s https://network.feral.io/reroute | grep "Your IP address is" | sed 's/.<\/p>//g' | awk '{print $NF}')
+while [ route_set = 0 ]; do
+route_set=$(curl -4 -s "https://network.feral.io/looking-glass?ip=ipv4&action=traceroute&target=$ext_IP" | grep -c "$(curl -4 -s https://network.feral.io/reroute | grep checked | awk '{print $NF}' | sed 's|</label></li>||g')")
+done
+echo Route has been set.
+}
+############################
+####### Functions End ######
+############################
+#
+
+############################
 #### User Script Starts ####
 ############################
 #
@@ -59,9 +78,13 @@ command -v openssl >/dev/null 2>&1 || { echo >&2 "This script requires openssl b
 #
 if [ $(curl -4 -s https://network.feral.io/reroute | grep checked | grep -c 0.0.0.0) = 0  ]; then
 	echo "Starting off by setting route to default to ensure accurate results."
+	old_route=$(curl -4 -s https://network.feral.io/reroute | grep checked | awk '{print $NF}' | sed 's|</label></li>||g')
 	curl -4 'https://network.feral.io/reroute' --data "nh=0.0.0.0" >/dev/null 2>&1
-	echo "Waiting two minutes for route change to take effect..."
-	sleep 120
+	echo "Waiting for route change to take effect..."
+	ext_IP=$(curl -4 -s https://network.feral.io/reroute | grep "Your IP address is" | sed 's/.<\/p>//g' | awk '{print $NF}')
+	while [ route_set = 1 ]; do
+	route_set=$(curl -4 -s "https://network.feral.io/looking-glass?ip=ipv4&action=traceroute&target=$ext_IP" | grep -c "$old_route")
+	done
 else
 	echo "You are currently using the default route"
 fi
@@ -71,14 +94,19 @@ fi
 		((count++))
 		echo "Testing single segment download speed from ${route_names[$count]}..."
 		messyspeed=$(echo -n "scale=2; " && curl -4 -s -L ${test_files[$count]} -w "%{speed_download}" -o /dev/null)
-		speed=$(echo $messyspeed/1048576| bc | sed 's/$/MB\/s/')	
-		if [ "$speed" = "ERROR404:" ]; then
-			echo -e "\033[31m""\nThe test file cannot be found at ${test_files[$count]} \n""\e[0m"
-			exit
+		if [ -z "$(echo $messyspeed | awk -F\; '{print $2}'| sed 's/ //g')" ]; then
+			echo "There was an issue downloading ${test_files[$count]}"
+			speed="0"
+		else
+			speed=$(echo $messyspeed/1048576| bc | sed 's/$/MB\/s/')	
+			if [ "$speed" = "ERROR404:" ]; then
+				echo -e "\033[31m""\nThe test file cannot be found at ${test_files[$count]} \n""\e[0m"
+				exit
+			fi
+	        	        echo -e "\033[32m""routing through ${route_names[$count]} results in $speed""\e[0m"
+	               	 echo 
+	               	 echo "$speed ${routes[$count]} ${route_names[$count]}" >> $reroute_log
 		fi
-	                echo -e "\033[32m""routing through ${route_names[$count]} results in $speed""\e[0m"
-	                echo 
-	                echo "$speed ${routes[$count]} ${route_names[$count]}" >> $reroute_log
 	done
 	#
 	fastestroute=$(sort -gr $reroute_log | head -n 1 | awk '{print $2}')
@@ -88,7 +116,8 @@ fi
 	echo -e "Routing through $fastestroutename provided the highest speed of $fastestspeed"
 	echo "Setting route to $fastestroutename / $fastestroute ..."
 	curl -4 'https://network.feral.io/reroute' --data "nh=$fastestroute" >/dev/null 2>&1
-	echo "Please wait two minutes for route change to take effect..."
+	echo "Waiting for route change to take effect..."
+	reroute_check
 	rm $reroute_log
 	#
 	echo 'All done!'
