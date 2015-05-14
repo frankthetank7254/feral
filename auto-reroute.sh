@@ -1,6 +1,6 @@
 #!/bin/bash
 # Auto-reroute
-scriptversion="1.0.2"
+scriptversion="1.0.3"
 scriptname="auto-reroute"
 # Author adamaze
 #
@@ -28,6 +28,7 @@ fi
 ## Version History Starts ##
 ############################
 #
+# v1.0.3 - Added logging (~./auto-reroute/auto-reroute.log).
 # v1.0.2 - Added new route option (Level3).
 # v1.0.1 - Added route change verification to speed up script. (no more waiting full two minutes)
 # v1.0.0 - First version with official test downloads.
@@ -77,6 +78,7 @@ command -v curl >/dev/null 2>&1 || { echo >&2 "This script requires curl but it'
 command -v bc >/dev/null 2>&1 || { echo >&2 "This script requires bc but it's not installed.  Aborting."; exit 1; }
 command -v openssl >/dev/null 2>&1 || { echo >&2 "This script requires openssl but it's not installed.  Aborting."; exit 1; }
 #
+mkdir -p ~/.auto-reroute
 if [ $(curl -4 -s https://network.feral.io/reroute | grep checked | grep -c 0.0.0.0) = 0  ]; then
 	echo "Starting off by setting route to default to ensure accurate results."
 	old_route=$(curl -4 -s https://network.feral.io/reroute | grep checked | awk '{print $NF}' | sed 's|</label></li>||g')
@@ -119,6 +121,9 @@ fi
 	curl -4 'https://network.feral.io/reroute' --data "nh=$fastestroute" >/dev/null 2>&1
 	echo "Waiting for route change to take effect..."
 	reroute_check
+	sed -i 's/ /, /g' $reroute_log
+	sed -i "s/^/$(date -u), /g" $reroute_log
+	cat $reroute_log >> ~/.auto-reroute/auto-reroute.log
 	rm $reroute_log
 	#
 	echo 'All done!'
