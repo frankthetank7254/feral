@@ -1,6 +1,6 @@
 #!/bin/bash
 # Auto-reroute
-scriptversion="1.0.1"
+scriptversion="1.0.2"
 scriptname="auto-reroute"
 # Author adamaze
 #
@@ -28,6 +28,7 @@ fi
 ## Version History Starts ##
 ############################
 #
+# v1.0.2 - Added new route option (Level3).
 # v1.0.1 - Added route change verification to speed up script. (no more waiting full two minutes)
 # v1.0.0 - First version with official test downloads.
 #
@@ -40,10 +41,10 @@ fi
 ############################
 #
 #
-routes=(0.0.0.0 77.67.64.81 78.152.33.250 78.152.57.84 81.20.64.101 81.20.69.197 87.255.32.229 87.255.32.249)
-route_names=(Default GTT Atrato#1 Atrato#2 NTT#1 NTT#2 Fiber-Ring/Leaseweb#2 Fiber-Ring/Leaseweb#1)
+routes=(0.0.0.0 77.67.64.81 78.152.33.250 78.152.57.84 81.20.64.101 81.20.69.197 87.255.32.229 87.255.32.249 213.19.196.233)
+route_names=(Default GTT Atrato#1 Atrato#2 NTT#1 NTT#2 Fiber-Ring/Leaseweb#2 Fiber-Ring/Leaseweb#1 Level3)
 #
-test_files=(https://feral.io/test.bin https://gtt-1.feral.io/test.bin https://atrato-1.feral.io/test.bin https://atrato-2.feral.io/test.bin https://ntt-1.feral.io/test.bin https://ntt-2.feral.io/test.bin https://fr-1.feral.io/test.bin https://fr-2.feral.io/test.bin)
+test_files=(https://feral.io/test.bin https://gtt-1.feral.io/test.bin https://atrato-1.feral.io/test.bin https://atrato-2.feral.io/test.bin https://ntt-1.feral.io/test.bin https://ntt-2.feral.io/test.bin https://fr-1.feral.io/test.bin https://fr-2.feral.io/test.bin https://level3.feral.io/test.bin)
 count=-1
 reroute_log=/tmp/$(openssl rand -hex 10)
 ############################
