@@ -373,8 +373,10 @@ then
 			echo "sue '~/bin/ncdu ~/' to run."
 		fi
 	else
-		echo "You will need to open a ticket."
-		echo "https://www.feralhosting.com/manager/tickets/"
+		echo "You will need to open a ticket to install some dependencies before you can continue the install."
+
+		echo -e "\033[34m""https://www.feralhosting.com/manager/tickets/""\e[0m"
+
 		echo "Use 'Dependancy Install' as the subject, and following as the body:"
 		echo "Please can you install the libncurses5-dev libncursesw5-dev dependencies for NCDU?
 
