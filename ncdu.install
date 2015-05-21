@@ -380,12 +380,12 @@ then
 		echo "Use 'Dependancy Install' as the subject, and following as the body:"
 		echo "Please can you install the libncurses5-dev libncursesw5-dev dependencies for NCDU?
 
-		https://packages.debian.org/en/wheezy/libncurses5-dev
-		https://packages.debian.org/en/wheezy/libncursesw5-dev
+https://packages.debian.org/en/wheezy/libncurses5-dev
+https://packages.debian.org/en/wheezy/libncursesw5-dev
 
-		apt-get install libncurses5-dev libncursesw5-dev
+apt-get install libncurses5-dev libncursesw5-dev
 
-		Thank you."
+Thank you."
 		echo
 		echo "Once you hear back that they are installed, you can run this script again to complete the install."
 	fi	
