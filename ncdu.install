@@ -12,7 +12,7 @@
 #
 # Bash Command for easy reference:
 #
-# wget -qO ~/XXX http://git.io/XXX && bash ~/XXX
+# wget -qO ~/ncdu.install http://git.io/vTwuq && bash ~/ncdu.install
 #
 ############################
 ###### Basic Info End ######
@@ -74,13 +74,13 @@ scriptauthor="adamaze"
 contributors="None credited"
 #
 # Set the http://git.io/ shortened URL for the raw github URL here:
-gitiourl="XXX"
+gitiourl="http://git.io/vTwuq"
 #
 # Don't edit: This is the bash command shown when using the info option.
 gitiocommand="wget -qO ~/$scriptname $gitiourl && bash ~/$scriptname"
 #
 # This is the raw github url of the script to use with the built in updater.
-scripturl="XXX"
+scripturl="https://raw.githubusercontent.com/frankthetank7254/feral/master/ncdu.install"
 #
 # This will generate a 20 character random passsword for use with your applications.
 apppass="$(< /dev/urandom tr -dc '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' | head -c20; echo;)"
