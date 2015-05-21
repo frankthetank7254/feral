@@ -124,7 +124,7 @@ gitissue="https://github.com/feralhosting/feralfilehosting/issues/new"
 ############################
 #
 # Disables the built in script updater permanently by setting this variable to 0.
-updaterenabled="0"
+updaterenabled="1"
 #
 ############################
 ####### Variable End #######
@@ -368,9 +368,9 @@ then
 		rm -r ~/ncdu-1.11*
 		echo "All done"
 		if [ $(echo $PATH | grep -c ${whoami}/bin) = 1 ]; then
-			echo "Use 'ncdu ~/' to run."
+			echo "Use 'ncdu ~/' to run, the arrow keys, enter, and delete to navigate, and 'q' to quit"
 		else
-			echo "sue '~/bin/ncdu ~/' to run."
+			echo "sue '~/bin/ncdu ~/' to run, the arrow keys, enter, and delete to navigate, and 'q' to quit"
 		fi
 	else
 		echo "You will need to open a ticket to install some dependencies before you can continue the install."
