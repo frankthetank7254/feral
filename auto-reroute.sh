@@ -96,7 +96,8 @@ fi
 	do
 		((count++))
 		echo "Testing single segment download speed from ${route_names[$count]}..."
-		messyspeed=$(echo -n "scale=2; " && curl -4 -s -L ${test_files[$count]} -w "%{speed_download}" -o /dev/null)
+		##need sed now because some european versions of curl insert a , in the speed results
+		messyspeed=$(echo -n "scale=2; " && curl -4 -s -L ${test_files[$count]} -w "%{speed_download}" -o /dev/null | sed "s/\,/\./g")
 		if [ -z "$(echo $messyspeed | awk -F\; '{print $2}'| sed 's/ //g')" ]; then
 			echo "There was an issue downloading ${test_files[$count]}"
 			speed="0"
