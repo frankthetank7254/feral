@@ -64,6 +64,12 @@ route_set=$(curl -4 -s "https://network.feral.io/looking-glass?ip=ipv4&action=tr
 done
 echo Route has been set.
 }
+
+function error_exit {
+rm -f $reroute_log
+exit 1
+}
+
 ############################
 ####### Functions End ######
 ############################
@@ -78,6 +84,13 @@ command -v curl >/dev/null 2>&1 || { echo >&2 "This script requires curl but it'
 command -v bc >/dev/null 2>&1 || { echo >&2 "This script requires bc but it's not installed.  Aborting."; exit 1; }
 command -v openssl >/dev/null 2>&1 || { echo >&2 "This script requires openssl but it's not installed.  Aborting."; exit 1; }
 #
+if [ "$(curl -sI https://network.feral.io/reroute | head -1 | grep -c 502)" = "1" ]; then
+	echo "The Feral reroute tool is unavailable at this time."
+	error_exit
+fi
+#
+#
+
 mkdir -p ~/.auto-reroute
 if [ $(curl -4 -s https://network.feral.io/reroute | grep checked | grep -c 0.0.0.0) = 0  ]; then
 	echo "Starting off by setting route to default to ensure accurate results."
