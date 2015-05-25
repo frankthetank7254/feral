@@ -31,10 +31,16 @@ echo "#                     CPU Info                      #" | tee -a $logpath
 echo "#####################################################" | tee -a $logpath
 echo | tee -a $logpath
 echo "Server has been up for $(uptime | awk '{print $3 " " $4}' | sed 's/,//')." | tee -a $logpath
-echo "For the past minute, the average CPU utilization has been $(uptime | awk '{print $(NF-2)}')" | tee -a $logpath
-echo "For the past 5 minutes, the average CPU utilization has been $(uptime | awk '{print $(NF-1)}')" | tee -a $logpath
+echo "For the past minute, the average CPU utilization has been $(uptime | awk '{print $(NF-2)}' | sed 's/,//')" | tee -a $logpath
+echo "For the past 5 minutes, the average CPU utilization has been $(uptime | awk '{print $(NF-1)}' | sed 's/,//')" | tee -a $logpath
 echo "For the past 15 minutes, the average CPU utilization has been $(uptime | awk '{print $NF}')" | tee -a $logpath
 echo "As long as these numbers are below $(nproc), CPU usage is fine." | tee -a $logpath
+echo | tee -a $logpath
+if [ $(uname -r | grep -c "amd64") = 1 ]; then
+	echo "Your server has multiarch support"
+else
+	echo "Your server does not have multiarch support"
+fi
 echo | tee -a $logpath
 echo "#####################################################" | tee -a $logpath
 echo "#                  Hard Drive Info                  #" | tee -a $logpath
