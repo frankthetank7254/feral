@@ -58,9 +58,10 @@ reroute_log=/tmp/$(openssl rand -hex 10)
 #
 #
 function reroute_check {
-ext_IP=$(curl -4 -s https://network.feral.io/reroute | grep "Your IP address is" | sed 's/.<\/p>//g' | awk '{print $NF}')
-while [ route_set = 0 ]; do
-route_set=$(curl -4 -s "https://network.feral.io/looking-glass?ip=ipv4&action=traceroute&target=$ext_IP" | grep -c "$(curl -4 -s https://network.feral.io/reroute | grep checked | awk '{print $NF}' | sed 's|</label></li>||g')")
+ext_IP=$(curl -4 -s https://network.feral.io/reroute | grep "Your IPv4 address is" | sed 's/<\/p>//g' | awk '{print $NF}')
+route_set=0
+while [ $route_set = 0 ]; do
+route_set=$(curl -4 -s "https://network.feral.io/looking-glass?action=traceroute&host=$ext_IP" | grep -c "$(curl -4 -s https://network.feral.io/reroute | grep checked | awk '{print $(NF-1)}' | sed 's|value=||g' | sed 's/"//g')")
 done
 echo Route has been set.
 }
@@ -97,12 +98,13 @@ fi
 mkdir -p ~/.auto-reroute
 if [ $(curl -4 -s https://network.feral.io/reroute | grep checked | grep -c 0.0.0.0) = 0  ]; then
 	echo "Starting off by setting route to default to ensure accurate results."
-	old_route=$(curl -4 -s https://network.feral.io/reroute | grep checked | awk '{print $NF}' | sed 's|</label></li>||g')
+	old_route=$(curl -4 -s https://network.feral.io/reroute | grep checked | awk '{print $(NF-1)}' | sed 's|value=||g' | sed 's/"//g')
 	curl -4 'https://network.feral.io/reroute' --data "nh=0.0.0.0" >/dev/null 2>&1
 	echo "Waiting for route change to take effect..."
-	ext_IP=$(curl -4 -s https://network.feral.io/reroute | grep "Your IP address is" | sed 's/.<\/p>//g' | awk '{print $NF}')
-	while [ route_set = 1 ]; do
-	route_set=$(curl -4 -s "https://network.feral.io/looking-glass?ip=ipv4&action=traceroute&target=$ext_IP" | grep -c "$old_route")
+	ext_IP=$(curl -4 -s https://network.feral.io/reroute | grep "Your IPv4 address is" | sed 's/<\/p>//g' | awk '{print $NF}')
+	route_set=1
+	while [ $route_set = 1 ]; do
+	route_set=$(curl -4 -s "https://network.feral.io/looking-glass?action=traceroute&host=$ext_IP" | grep -c "$old_route")
 	done
 else
 	echo "You are currently using the default route"
@@ -134,10 +136,14 @@ fi
 	fastestroutename=$(sort -gr $reroute_log | head -n 1 | awk '{print $3}')
 	#
 	echo -e "Routing through $fastestroutename provided the highest speed of $fastestspeed"
-	echo "Setting route to $fastestroutename / $fastestroute ..."
-	curl -4 'https://network.feral.io/reroute' --data "nh=$fastestroute" >/dev/null 2>&1
-	echo "Waiting for route change to take effect..."
-	reroute_check
+	if [ $fastestroute = "0.0.0.0" ]; then
+		echo "No need to change routes, as the Default was chosen at the beginning of this test."
+	else
+		echo "Setting route to $fastestroutename / $fastestroute ..."
+		curl -4 'https://network.feral.io/reroute' --data "nh=$fastestroute" >/dev/null 2>&1
+		echo "Waiting for route change to take effect..."
+		reroute_check
+	fi
 	sed -i 's/ /, /g' $reroute_log
 	sed -i "s/^/$(date -u), /g" $reroute_log
 	cat $reroute_log >> ~/.auto-reroute/auto-reroute.log
