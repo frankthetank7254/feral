@@ -42,10 +42,10 @@ fi
 ############################
 #
 #
-routes=(0.0.0.0 77.67.64.81 78.152.33.250 78.152.57.84 81.20.64.101 81.20.69.197 87.255.32.229 87.255.32.249 213.19.196.233)
-route_names=(Default GTT Atrato#1 Atrato#2 NTT#1 NTT#2 Fiber-Ring/Leaseweb#2 Fiber-Ring/Leaseweb#1 Level3)
+routes=(0.0.0.0 78.152.57.84 87.255.32.229 87.255.32.249 77.67.64.81 213.19.196.233 81.20.64.101 81.20.69.197)
+route_names=(Default Atrato Fiber-Ring#1 Fiber-Ring#2 GTT Level3 NTT#1 NTT#2)
 #
-test_files=(https://feral.io/test.bin https://gtt-1.feral.io/test.bin https://atrato-1.feral.io/test.bin https://atrato-2.feral.io/test.bin https://ntt-1.feral.io/test.bin https://ntt-2.feral.io/test.bin https://fr-1.feral.io/test.bin https://fr-2.feral.io/test.bin https://level3.feral.io/test.bin)
+test_files=(https://feral.io/test.bin https://atrato-1.feral.io/test.bin https://fr-1.feral.io/test.bin https://fr-2.feral.io/test.bin https://gtt-1.feral.io/test.bin https://level3.feral.io/test.bin https://ntt-1.feral.io/test.bin https://ntt-2.feral.io/test.bin)
 count=-1
 reroute_log=/tmp/$(openssl rand -hex 10)
 ############################
@@ -70,6 +70,9 @@ rm -f $reroute_log
 exit 1
 }
 
+function requested_route_check {
+curl -4 -s https://network.feral.io/reroute | grep checked | grep -o -P 'value=".{0,15}' | awk '{print $1}' | sed 's/value="//g' | sed 's/"//g' | sed 's/>//g'
+}
 ############################
 ####### Functions End ######
 ############################
