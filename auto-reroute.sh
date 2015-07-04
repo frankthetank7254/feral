@@ -120,7 +120,7 @@ fi
 			echo "There was an issue downloading ${test_files[$count]}"
 			speed="0"
 		else
-			speed=$(echo $messyspeed/1048576*8 | bc | sed 's/$/Mb\/s/')	
+			speed=$(echo $messyspeed/1048576*8 | bc | sed 's/$/Mbit\/s/')	
 			if [ "$speed" = "ERROR404:" ]; then
 				echo -e "\033[31m""\nThe test file cannot be found at ${test_files[$count]} \n""\e[0m"
 				exit
