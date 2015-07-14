@@ -28,6 +28,7 @@ fi
 ## Version History Starts ##
 ############################
 #
+# v1.0.5 - Fixed issue where fastest route was not always chosen on cygwin
 # v1.0.4 - Removed route
 # v1.0.3 - Added logging (~./auto-reroute/auto-reroute.log).
 # v1.0.2 - Added new route option (Level3).
@@ -125,7 +126,7 @@ fi
 			echo "There was an issue downloading ${test_files[$count]}"
 			speed="0"
 		else
-			speed=$(echo $messyspeed/1048576*8 | bc | sed 's/$/Mbit\/s/')	
+			speed=$(echo $messyspeed/1048576*8 | bc | sed 's/$/ Mbit\/s/')	
 			if [ "$speed" = "ERROR404:" ]; then
 				echo -e "\033[31m""\nThe test file cannot be found at ${test_files[$count]} \n""\e[0m"
 				exit
@@ -136,11 +137,11 @@ fi
 		fi
 	done
 	#
-	fastestroute=$(sort -gr $reroute_log | head -n 1 | awk '{print $2}')
+	fastestroute=$(sort -gr $reroute_log | head -n 1 | awk '{print $3}')
 	fastestspeed=$(sort -gr $reroute_log | head -n 1 | awk '{print $1}')
-	fastestroutename=$(sort -gr $reroute_log | head -n 1 | awk '{print $3}')
+	fastestroutename=$(sort -gr $reroute_log | head -n 1 | awk '{print $4}')
 	#
-	echo -e "Routing through $fastestroutename provided the highest speed of $fastestspeed"
+	echo -e "Routing through $fastestroutename provided the highest speed of $fastestspeed Mbit/s"
 	if [ $fastestroute = "0.0.0.0" ]; then
 		echo "No need to change routes, as the Default was chosen at the beginning of this test."
 	else
