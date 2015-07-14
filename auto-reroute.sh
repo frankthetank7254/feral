@@ -28,6 +28,7 @@ fi
 ## Version History Starts ##
 ############################
 #
+# v1.0.4 - Removed route
 # v1.0.3 - Added logging (~./auto-reroute/auto-reroute.log).
 # v1.0.2 - Added new route option (Level3).
 # v1.0.1 - Added route change verification to speed up script. (no more waiting full two minutes)
@@ -42,10 +43,10 @@ fi
 ############################
 #
 #
-routes=(0.0.0.0 78.152.57.84 87.255.32.229 87.255.32.249 77.67.64.81 213.19.196.233 81.20.64.101 81.20.69.197)
-route_names=(Default Atrato Fiber-Ring#1 Fiber-Ring#2 GTT Level3 NTT#1 NTT#2)
+routes=(0.0.0.0 87.255.32.229 87.255.32.249 77.67.64.81 213.19.196.233 81.20.64.101 81.20.69.197)
+route_names=(Default Fiber-Ring#1 Fiber-Ring#2 GTT Level3 NTT#1 NTT#2)
 #
-test_files=(https://feral.io/test.bin https://atrato-1.feral.io/test.bin https://fr-1.feral.io/test.bin https://fr-2.feral.io/test.bin https://gtt-1.feral.io/test.bin https://level3.feral.io/test.bin https://ntt-1.feral.io/test.bin https://ntt-2.feral.io/test.bin)
+test_files=(https://feral.io/test.bin https://fr-1.feral.io/test.bin https://fr-2.feral.io/test.bin https://gtt-1.feral.io/test.bin https://level3.feral.io/test.bin https://ntt-1.feral.io/test.bin https://ntt-2.feral.io/test.bin)
 count=-1
 reroute_log=/tmp/$(openssl rand -hex 10)
 ############################
@@ -99,7 +100,11 @@ mkdir -p ~/.auto-reroute
 if [ $(curl -4 -s https://network.feral.io/reroute | grep checked | grep -c 0.0.0.0) = 0  ]; then
 	echo "Starting off by setting route to default to ensure accurate results."
 	old_route=$(curl -4 -s https://network.feral.io/reroute | grep checked | awk '{print $(NF-1)}' | sed 's|value=||g' | sed 's/"//g')
-	curl -4 'https://network.feral.io/reroute' --data "nh=0.0.0.0" >/dev/null 2>&1
+	timeout 10 curl -4 'https://network.feral.io/reroute' --data "nh=0.0.0.0" >/dev/null 2>&1
+	if [ $? = 124  ]; then
+		echo "there seems to be an issue with the reroute page..."
+		error_exit
+	fi
 	echo "Waiting for route change to take effect..."
 	ext_IP=$(curl -4 -s https://network.feral.io/reroute | grep "Your IPv4 address is" | sed 's/<\/p>//g' | awk '{print $NF}')
 	route_set=1
