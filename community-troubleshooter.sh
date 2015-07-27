@@ -93,7 +93,7 @@ else
 	echo "Home network not responding to pings for latency test" | tee -a $logpath
 fi
 echo | tee -a $logpath
-if [ $(ps aux | grep -v grep | grep -c plex) > 0 ];then
+if [ $(ps aux | grep -v grep | grep -c plex) -gt 0 ];then
 	echo "Plex is already running on this server" | tee -a $logpath
 fi
 
