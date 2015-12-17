@@ -101,7 +101,7 @@ mkdir -p ~/.auto-reroute
 if [ $(curl -4 -s https://network.feral.io/reroute | grep checked | grep -c 0.0.0.0) = 0  ]; then
 	echo "Starting off by setting route to default to ensure accurate results."
 	old_route=$(curl -4 -s https://network.feral.io/reroute | grep checked | awk '{print $(NF-1)}' | sed 's|value=||g' | sed 's/"//g')
-	timeout 10 curl -4 'https://network.feral.io/reroute' --data "nh=0.0.0.0" >/dev/null 2>&1
+	curl -m 10 -4 'https://network.feral.io/reroute' --data "nh=0.0.0.0" >/dev/null 2>&1
 	if [ $? = 124  ]; then
 		echo "there seems to be an issue with the reroute page..."
 		error_exit
@@ -111,6 +111,7 @@ if [ $(curl -4 -s https://network.feral.io/reroute | grep checked | grep -c 0.0.
 	route_set=1
 	while [ $route_set = 1 ]; do
 	route_set=$(curl -4 -s "https://network.feral.io/looking-glass?action=traceroute&host=$ext_IP" | grep -c "$old_route")
+    sleep 2
 	done
 else
 	echo "You are currently using the default route"
