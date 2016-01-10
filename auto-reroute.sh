@@ -1,6 +1,6 @@
 #!/bin/bash
 # Auto-reroute
-scriptversion="1.0.3"
+scriptversion="1.0.6"
 scriptname="auto-reroute"
 # Author adamaze
 #
@@ -28,6 +28,7 @@ fi
 ## Version History Starts ##
 ############################
 #
+# v1.0.6 - Added Cogent route option, removed FiberRing options
 # v1.0.5 - Fixed issue where fastest route was not always chosen on cygwin
 # v1.0.4 - Removed route
 # v1.0.3 - Added logging (~./auto-reroute/auto-reroute.log).
@@ -44,10 +45,10 @@ fi
 ############################
 #
 #
-routes=(0.0.0.0 87.255.32.229 87.255.32.249 77.67.64.81 213.19.196.233 81.20.64.101 81.20.69.197)
-route_names=(Default Fiber-Ring#1 Fiber-Ring#2 GTT Level3 NTT#1 NTT#2)
+routes=(0.0.0.0 130.117.255.36 77.67.64.81 213.19.196.233 81.20.64.101 81.20.69.197)
+route_names=(Default Cogent GTT Level3 NTT#1 NTT#2)
 #
-test_files=(https://feral.io/test.bin https://fr-1.feral.io/test.bin https://fr-2.feral.io/test.bin https://gtt-1.feral.io/test.bin https://level3.feral.io/test.bin https://ntt-1.feral.io/test.bin https://ntt-2.feral.io/test.bin)
+test_files=(https://feral.io/test.bin https://cogent-1.feral.io/test.bin https://gtt-1.feral.io/test.bin https://level3.feral.io/test.bin https://ntt-1.feral.io/test.bin https://ntt-2.feral.io/test.bin)
 count=-1
 reroute_log=/tmp/$(openssl rand -hex 10)
 ############################
