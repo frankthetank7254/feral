@@ -1,6 +1,6 @@
 #!/bin/bash
 # Auto-reroute
-scriptversion="1.0.6"
+scriptversion="1.0.7"
 scriptname="auto-reroute"
 # Author adamaze
 #
@@ -28,6 +28,7 @@ fi
 ## Version History Starts ##
 ############################
 #
+# v1.0.6 - Added check for sed
 # v1.0.6 - Added Cogent route option, removed FiberRing options
 # v1.0.5 - Fixed issue where fastest route was not always chosen on cygwin
 # v1.0.4 - Removed route
@@ -87,6 +88,7 @@ curl -4 -s https://network.feral.io/reroute | grep checked | grep -o -P 'value="
 ############################
 #
 # Prerequisite check
+command -v sed >/dev/null 2>&1 || { echo >&2 "This script requires sed but it's not installed.  Aborting."; exit 1; }
 command -v curl >/dev/null 2>&1 || { echo >&2 "This script requires curl but it's not installed.  Aborting."; exit 1; }
 command -v bc >/dev/null 2>&1 || { echo >&2 "This script requires bc but it's not installed.  Aborting."; exit 1; }
 command -v openssl >/dev/null 2>&1 || { echo >&2 "This script requires openssl but it's not installed.  Aborting."; exit 1; }
