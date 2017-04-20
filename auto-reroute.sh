@@ -1,6 +1,6 @@
 #!/bin/bash
 # Auto-reroute
-scriptversion="1.0.7"
+scriptversion="1.0.8"
 scriptname="auto-reroute"
 # Author adamaze
 #
@@ -28,6 +28,7 @@ fi
 ## Version History Starts ##
 ############################
 #
+# v1.0.8 - Added "Console" routes
 # v1.0.6 - Added check for sed
 # v1.0.6 - Added Cogent route option, removed FiberRing options
 # v1.0.5 - Fixed issue where fastest route was not always chosen on cygwin
@@ -46,10 +47,10 @@ fi
 ############################
 #
 #
-routes=(0.0.0.0 130.117.255.36 77.67.64.81 213.19.196.233 81.20.64.101 81.20.69.197 62.115.145.50)
-route_names=(Default Cogent GTT Level3 NTT#1 NTT#2 Telia)
+routes=(0.0.0.0 130.117.255.36 31.217.134.49 31.217.134.45 77.67.64.81 81.20.64.101 81.20.69.197 213.19.196.233 62.115.145.50)
+route_names=(Default Cogent Console#1 Console#2 GTT NTT#1 NTT#2 Level3 Telia)
 #
-test_files=(https://feral.io/test.bin https://cogent-1.feral.io/test.bin https://gtt-1.feral.io/test.bin https://level3.feral.io/test.bin https://ntt-1.feral.io/test.bin https://ntt-2.feral.io/test.bin https://telia.feral.io/test.bin)
+test_files=(https://feral.io/test.bin https://cogent-1.feral.io/test.bin https://console-1.feral.io/test.bin https://console-2.feral.io/test.bin https://gtt-1.feral.io/test.bin https://ntt-1.feral.io/test.bin https://ntt-2.feral.io/test.bin https://level3.feral.io/test.bin https://telia.feral.io/test.bin)
 count=-1
 reroute_log=/tmp/$(openssl rand -hex 10)
 ############################
